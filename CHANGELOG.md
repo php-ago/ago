@@ -1,5 +1,9 @@
 # Release Notes
 
+## v3.2.6 (2024-11-01)
+- Moved repo to a new organization `php-ago/ago`
+- Update `composer.json` file
+
 ## v3.2.5 (2024-09-08)
 - Formatted code with Pint
 - Update `README.md` file
@@ -66,7 +70,7 @@
 
 ## v2.3.0 (2022-01-27)
 - Added deprecation notice when you try to use `Option::UPCOMING` option
-- Closed [issue #34](vhttps://github.com/SerhiiCho/ago/issues/34). Changed `trans` method to except future dates and return correct result
+- Closed [issue #34](vhttps://github.com/php-ago/ago/issues/34). Changed `trans` method to except future dates and return correct result
 
 ## v2.2.1 (2022-01-16)
 - Fixed mistake in composer.json file with carbon library being as a dev dependency

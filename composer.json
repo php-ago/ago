@@ -1,7 +1,7 @@
 {
     "name": "serhii/ago",
     "description": "Converts given date into a nice readable format. Supports russian and english. Example will be '1 hour ago', '2 days ago', '1 second ago', 'Online' and so.",
-    "homepage": "https://serhiicho.github.io/ago-docs/",
+    "homepage": "https://php-ago.github.io/",
     "keywords": [
         "time ago",
         "library",
@@ -9,7 +9,8 @@
     ],
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Serhii Cho",
@@ -37,7 +38,7 @@
         "symfony/var-dumper": "^4.2",
         "arokettu/private-access": "^3.0.0",
         "phpstan/phpstan": "^1.10.57",
-        "squizlabs/php_codesniffer": "^4.0",
+        "squizlabs/php_codesniffer": "^3.7.2",
         "laravel/pint": "dev-main"
     },
     "scripts": {
@@ -53,6 +54,6 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/SerhiiCho/ago/issues"
+        "issues": "https://github.com/php-ago/ago/issues"
     }
 }

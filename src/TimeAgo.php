@@ -202,7 +202,7 @@ final class TimeAgo
     private function validateOptions(): void
     {
         if ($this->optionIsSet(Option::UPCOMING)) {
-            $msg = 'Option::UPCOMING is deprecated. Read more: https://github.com/SerhiiCho/ago/issues/34';
+            $msg = 'Option::UPCOMING is deprecated. Read more: https://github.com/php-ago/ago/issues/34';
             trigger_error($msg, E_USER_DEPRECATED);
         }
 

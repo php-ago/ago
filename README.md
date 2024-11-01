@@ -1,14 +1,14 @@
 ![Ago package](https://serhii.io/storage/other/ago.png)
 
-[![Ago](https://github.com/SerhiiCho/ago/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/SerhiiCho/ago/actions/workflows/php.yml)
+[![Ago](https://github.com/php-ago/ago/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/php-ago/ago/actions/workflows/php.yml)
 [![Total Downloads](https://poser.pugx.org/serhii/ago/downloads)](https://packagist.org/packages/serhii/ago)
 [![License](https://poser.pugx.org/serhii/ago/license)](https://packagist.org/packages/serhii/ago)
 
 Date/time converter into "n time ago" format that supports multiple languages, such as 🇷🇺 🇬🇧 🇳🇱 🇺🇦 🇩🇪. You can contribute any language that you wish easily by creating a pull request. When new PHP version comes out, this package will be updated to support it as soon as possible.
 
-This package is well tested, optimized and already used in many production apps. It has shown itself pretty well. If you find any issues or bugs 🐞, please create an [issue](https://github.com/SerhiiCho/ago/issues/new), and I'll fix it as soon as I can.
+This package is well tested, optimized and already used in many production apps. It has shown itself pretty well. If you find any issues or bugs 🐞, please create an [issue](https://github.com/php-ago/ago/issues/new), and I'll fix it as soon as I can.
 
-### Follow the [official documentation](https://serhiicho.github.io/ago-docs/) for more information
+### Follow the [official documentation](https://php-ago.github.io/) for more information
 
 ## 🚀 Quick Start
 
@@ -18,4 +18,4 @@ composer require serhii/ago
 
 ## License
 
-The Ago project is licensed under the [MIT License](https://github.com/SerhiiCho/ago/blob/main/LICENSE)
+The Ago project is licensed under the [MIT License](https://github.com/php-ago/ago/blob/main/LICENSE)

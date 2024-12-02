@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Serhii\Tests;
 
+use function Arokettu\Debug\call_private_method;
+
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
+use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Exceptions\InvalidDateFormatException;
 use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
-use DateTime;
-use DateTimeImmutable;
-use Exception;
-
-use function Arokettu\Debug\call_private_method;
 
 class TimeAgoTest extends TestCase
 {

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Serhii\Tests;
 
+use function Arokettu\Debug\call_private_method;
+
 use Carbon\CarbonImmutable;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
 use Serhii\Ago\Lang;
 use Serhii\Ago\Option;
 use Serhii\Ago\TimeAgo;
-use Exception;
-
-use function Arokettu\Debug\call_private_method;
 
 class OptionsTest extends TestCase
 {

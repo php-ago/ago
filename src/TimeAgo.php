@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
+use Carbon\CarbonImmutable;
 use DateTimeInterface;
 use Serhii\Ago\Exceptions\InvalidDateFormatException;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
@@ -12,13 +13,11 @@ use Serhii\Ago\Exceptions\MissingRuleException;
 final class TimeAgo
 {
     /**
-     * @var Option[]
+     * @var array<int,Option>
      */
-    private static array $options = [];
-
-    private static Config|null $config;
-
-    private static self|null $instance = null;
+    private array $options = [];
+    private ?Config $config;
+    private static ?self $instance = null;
 
     private function __construct()
     {
@@ -32,26 +31,39 @@ final class TimeAgo
     /**
      * Takes date string and returns converted and translated date
      *
-     * @param int[]|int|null $options
-     *
      * @throws MissingRuleException
      * @throws InvalidDateFormatException
      * @throws InvalidOptionsException
      */
-    public static function trans(
-        int|string|DateTimeInterface|null $date,
-        array|int $options = [],
-    ): string {
-        return self::singleton()->handle();
+    public static function trans(int|string|DateTimeInterface $date, Option ...$options): string
+    {
+        $dateTime = match (true) {
+            is_int($date) => CarbonImmutable::createFromTimestamp($date),
+            is_string($date) => CarbonImmutable::parse($date),
+            $date instanceof DateTimeInterface => CarbonImmutable::instance($date),
+        };
+
+        return self::singleton()->handle($dateTime, $options);
     }
 
     public static function configure(Config $config): void
     {
-        self::$config = $config;
+        self::singleton()->config = $config;
     }
 
-    private function handle(): string
+    /**
+     * @param array<int,Option> $options
+     */
+    private function handle(CarbonImmutable $dateTime, array $options): string
     {
+        $this->options = $options;
+        $this->validateOptions();
+
+        $now = CarbonImmutable::now();
+        $timeInSec = $dateTime->diffInSeconds($now);
+
+        $langSet = new LangSet($this->config);
+
         return '';
     }
 

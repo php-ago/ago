@@ -7,28 +7,21 @@ namespace Serhii\Tests\Translations;
 use Carbon\CarbonImmutable;
 use Exception;
 use PHPUnit\Framework\TestCase;
-use Serhii\Ago\Lang;
+use Serhii\Ago\Config;
+use Serhii\Ago\Lang as Lang;
 use Serhii\Ago\TimeAgo;
 
 class DutchTest extends TestCase
 {
-    private $language = 'nl';
-
     /**
      * @dataProvider providerForReturnsCorrectTimeFromOneMinuteAndAbove
-     *
-     *
-     * @param string $method
-     * @param int $time
-     * @param string $output_expected
-     *
      * @throws Exception
      */
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $output_expected): void
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $expect): void
     {
-        Lang::set($this->language);
+        TimeAgo::configure(new Config(lang: Lang::NL));
         $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($output_expected, TimeAgo::trans($date));
+        $this->assertSame($expect, TimeAgo::trans($date));
     }
 
     public function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
@@ -74,20 +67,15 @@ class DutchTest extends TestCase
 
     /**
      * @dataProvider providerForReturnsCorrectDateFrom0SecondsTo59Seconds
-     *
-     *
-     * @param int $seconds
-     * @param array $expect
-     *
      * @throws Exception
      */
     public function testProviderForReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
-        Lang::set($this->language);
+        TimeAgo::configure(new Config(lang: Lang::NL));
 
         $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $message = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
-        $this->assertContains($res, $expect, $message);
+        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
+        $this->assertContains($res, $expect, $msg);
     }
 
     public function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

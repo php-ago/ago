@@ -3,23 +3,37 @@
 declare(strict_types=1);
 
 return [
-
-    'ago' => 'ago',
-    'just_now' => 'Just now',
-    'online' => 'Online',
-    'second' => 'second',
-    'seconds' => 'seconds',
-    'minute' => 'minute',
-    'minutes' => 'minutes',
-    'hour' => 'hour',
-    'hours' => 'hours',
-    'day' => 'day',
-    'days' => 'days',
-    'week' => 'week',
-    'weeks' => 'weeks',
-    'month' => 'month',
-    'months' => 'months',
-    'year' => 'year',
-    'years' => 'years',
-
+    "lang" => "en",
+    "format" => "{num} {timeUnit} {ago}",
+    "ago" => "ago",
+    "online" => "Online",
+    "justnow" => "Just now",
+    "second" => [
+        "one" => "second",
+        "other" => "seconds"
+    ],
+    "minute" => [
+        "one" => "minute",
+        "other" => "minutes"
+    ],
+    "hour" => [
+        "one" => "hour",
+        "other" => "hours"
+    ],
+    "day" => [
+        "one" => "day",
+        "other" => "days"
+    ],
+    "week" => [
+        "one" => "week",
+        "other" => "weeks"
+    ],
+    "month" => [
+        "one" => "month",
+        "other" => "months"
+    ],
+    "year" => [
+        "one" => "year",
+        "other" => "years"
+    ]
 ];

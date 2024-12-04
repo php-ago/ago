@@ -3,30 +3,45 @@
 declare(strict_types=1);
 
 return [
+    "lang" => "ru",
+    "format" => "{num} {timeUnit} {ago}",
+    "ago" => "назад",
+    "online" => "В сети",
+    "justnow" => "Только что",
 
-    'ago' => 'назад',
-    'just_now' => 'Только что',
-    'online' => 'В сети',
-    'second' => 'секунда',
-    'seconds' => 'секунды',
-    'seconds-special' => 'секунд',
-    'minute' => 'минута',
-    'minutes' => 'минуты',
-    'minutes-special' => 'минут',
-    'hour' => 'час',
-    'hours' => 'часа',
-    'hours-special' => 'часов',
-    'day' => 'день',
-    'days' => 'дня',
-    'days-special' => 'дней',
-    'week' => 'неделя',
-    'weeks' => 'недели',
-    'weeks-special' => 'недель',
-    'month' => 'месяц',
-    'months' => 'месяца',
-    'months-special' => 'месяцев',
-    'year' => 'год',
-    'years' => 'года',
-    'years-special' => 'лет',
-
+    "second" => [
+        "one" => "секунда",
+        "few" => "секунды",
+        "other" => "секунд",
+    ],
+    "minute" => [
+        "one" => "минута",
+        "few" => "минуты",
+        "other" => "минут",
+    ],
+    "hour" => [
+        "one" => "час",
+        "few" => "часа",
+        "other" => "часов",
+    ],
+    "day" => [
+        "one" => "день",
+        "few" => "дня",
+        "other" => "дней",
+    ],
+    "week" => [
+        "one" => "неделя",
+        "few" => "недели",
+        "other" => "недель",
+    ],
+    "month" => [
+        "one" => "месяц",
+        "few" => "месяца",
+        "other" => "месяцев",
+    ],
+    "year" => [
+        "one" => "год",
+        "few" => "года",
+        "other" => "лет",
+    ],
 ];

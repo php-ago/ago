@@ -3,23 +3,38 @@
 declare(strict_types=1);
 
 return [
+    "lang" => "nl",
+    "format" => "{num} {timeUnit} {ago}",
+    "ago" => "geleden",
+    "online" => "Online",
+    "justnow" => "Net nu",
 
-    'ago' => 'geleden',
-    'just_now' => 'Net nu',
-    'online' => 'Online',
-    'second' => 'seconde',
-    'seconds' => 'seconden',
-    'minute' => 'minuut',
-    'minutes' => 'minuten',
-    'hour' => 'uur',
-    'hours' => 'uur',
-    'day' => 'dag',
-    'days' => 'dagen',
-    'week' => 'week',
-    'weeks' => 'weken',
-    'month' => 'maand',
-    'months' => 'maanden',
-    'year' => 'jaar',
-    'years' => 'jaar',
-
+    "second" => [
+        "one" => "seconde",
+        "other" => "seconden",
+    ],
+    "minute" => [
+        "one" => "minuut",
+        "other" => "minuten",
+    ],
+    "hour" => [
+        "one" => "uur",
+        "other" => "uur",
+    ],
+    "day" => [
+        "one" => "dag",
+        "other" => "dagen",
+    ],
+    "week" => [
+        "one" => "week",
+        "other" => "weken",
+    ],
+    "month" => [
+        "one" => "maand",
+        "other" => "maanden",
+    ],
+    "year" => [
+        "one" => "jaar",
+        "other" => "jaar",
+    ],
 ];

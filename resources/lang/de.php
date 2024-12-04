@@ -3,23 +3,38 @@
 declare(strict_types=1);
 
 return [
+    "lang" => "de",
+    "format" => "{ago} {num} {timeUnit}",
+    "ago" => "Vor",
+    "online" => "Online",
+    "justnow" => "Soeben",
 
-    'ago' => 'Vor',
-    'just_now' => 'soeben',
-    'online' => 'Online',
-    'second' => 'Sekunde',
-    'seconds' => 'Sekunden',
-    'minute' => 'Minute',
-    'minutes' => 'Minuten',
-    'hour' => 'Stunde',
-    'hours' => 'Stunden',
-    'day' => 'Tag',
-    'days' => 'Tagen',
-    'week' => 'Woche',
-    'weeks' => 'Wochen',
-    'month' => 'Monat',
-    'months' => 'Monaten',
-    'year' => 'Jahr',
-    'years' => 'Jahren',
-
+    "second" => [
+        "one" => "Sekunde",
+        "other" => "Sekunden",
+    ],
+    "minute" => [
+        "one" => "Minute",
+        "other" => "Minuten",
+    ],
+    "hour" => [
+        "one" => "Stunde",
+        "other" => "Stunden",
+    ],
+    "day" => [
+        "one" => "Tag",
+        "other" => "Tagen",
+    ],
+    "week" => [
+        "one" => "Woche",
+        "other" => "Wochen",
+    ],
+    "month" => [
+        "one" => "Monat",
+        "other" => "Monaten",
+    ],
+    "year" => [
+        "one" => "Jahr",
+        "other" => "Jahren",
+    ],
 ];

@@ -35,14 +35,28 @@ final class LangSet
 
     public function __construct(private Config $config)
     {
-        $this->loadTranslations();
+        $trans = $this->getTranslations();
+
+        $this->lang = $trans['lang'];
+        $this->format = $trans['format'];
+        $this->ago = $trans['ago'];
+        $this->online = $trans['online'];
+        $this->justNow = $trans['justnow'];
+        $this->second = $trans['second'];
+        $this->minute = $trans['minute'];
+        $this->hour = $trans['hour'];
+        $this->day = $trans['day'];
+        $this->week = $trans['week'];
+        $this->month = $trans['month'];
+        $this->year = $trans['year'];
     }
 
-    public function loadTranslations(): void
+    /**
+     * @return array<string,string|array<string,string>>
+     */
+    private function getTranslations(): array
     {
         $path = __DIR__ . "/../locales/{$this->config->lang->value}.php";
-        $translations = require $path;
-
-        dd($translations);
+        return require $path;
     }
 }

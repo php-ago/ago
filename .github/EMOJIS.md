@@ -4,3 +4,4 @@
 - ✨ - Introducing new features
 - 🐛 - Fixing bugs
 - ♻️ - Refactoring code
+- ⚠️ - Breaking changes

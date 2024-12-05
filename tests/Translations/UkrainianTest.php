@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace Serhii\Tests\Translations;
 
 use Carbon\CarbonImmutable;
-use Exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
 use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
 
-class UkrainianTest extends TestCase
+final class UkrainianTest extends TestCase
 {
-    /**
-     * @dataProvider providerForReturnsCorrectTimeFromOneMinuteAndAbove
-     * @throws Exception
-     */
+    #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $output): void
     {
         TimeAgo::configure(new Config(lang: Lang::UK));
@@ -25,7 +22,7 @@ class UkrainianTest extends TestCase
         $this->assertSame($output, TimeAgo::trans($date));
     }
 
-    public function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
+    public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
             ['subSeconds', 60, '1 хвилина назад'],
@@ -86,10 +83,8 @@ class UkrainianTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerForReturnsCorrectDateFrom0SecondsTo59Seconds
-     * @throws Exception
-     */
+
+    #[DataProvider('providerForReturnsCorrectDateFrom0SecondsTo59Seconds')]
     public function testReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::UK));
@@ -99,7 +94,7 @@ class UkrainianTest extends TestCase
         $this->assertContains($res, $expect, $msg);
     }
 
-    public function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
+    public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
     {
         return [
             [0, ['0 секунд назад', '1 секунда назад']],

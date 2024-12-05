@@ -5,25 +5,20 @@ declare(strict_types=1);
 namespace Serhii\Tests;
 
 use Carbon\CarbonImmutable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Serhii\Ago\Config;
 use Serhii\Ago\TimeAgo;
 
-class TimeAgoTest extends TestCase
+final class TimeAgoTest extends TestCase
 {
-    /**
-     * @dataProvider providerForReturnsCorrectTime
-     * @throws Exception
-     */
+    #[DataProvider('providerForReturnsCorrectTime')]
     public function testReturnsCorrectTime(string $method, int $time, string $expect): void
     {
-        TimeAgo::configure(new Config());
-
         $date = CarbonImmutable::now()->{$method}($time);
         $this->assertSame($expect, TimeAgo::trans($date));
     }
 
-    public function providerForReturnsCorrectTime(): array
+    public static function providerForReturnsCorrectTime(): array
     {
         return [
             ['subMinutes', 1, '1 minute ago'],

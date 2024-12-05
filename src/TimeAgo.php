@@ -16,11 +16,12 @@ final class TimeAgo
      * @var array<int,Option>
      */
     private array $options = [];
-    private ?Config $config;
+    private Config $config;
     private static ?self $instance = null;
 
     private function __construct()
     {
+        $this->config = new Config();
     }
 
     public static function singleton(): self
@@ -62,8 +63,11 @@ final class TimeAgo
         $now = CarbonImmutable::now();
         $timeInSec = $dateTime->diffInSeconds($now);
 
-        $langSet = new LangSet($this->config);
+        $loader = new LangLoader(__DIR__ . '/../lang');
+        $translations = $loader->load($this->config->lang);
 
+        $langSet = new LangSet($translations);
+        $langSet->applyCustomTranslations($this->config->customTranslations ?? []);
 
         return '';
     }

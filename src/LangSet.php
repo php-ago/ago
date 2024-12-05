@@ -33,30 +33,28 @@ final class LangSet
     /** @var array<string,string> */
     public array $year;
 
-    public function __construct(private Config $config)
+    public function __construct(array $translations)
     {
-        $trans = $this->getTranslations();
-
-        $this->lang = $trans['lang'];
-        $this->format = $trans['format'];
-        $this->ago = $trans['ago'];
-        $this->online = $trans['online'];
-        $this->justNow = $trans['justnow'];
-        $this->second = $trans['second'];
-        $this->minute = $trans['minute'];
-        $this->hour = $trans['hour'];
-        $this->day = $trans['day'];
-        $this->week = $trans['week'];
-        $this->month = $trans['month'];
-        $this->year = $trans['year'];
+        $this->lang = $translations['lang'];
+        $this->format = $translations['format'];
+        $this->ago = $translations['ago'];
+        $this->online = $translations['online'];
+        $this->justNow = $translations['justnow'];
+        $this->second = $translations['second'];
+        $this->minute = $translations['minute'];
+        $this->hour = $translations['hour'];
+        $this->day = $translations['day'];
+        $this->week = $translations['week'];
+        $this->month = $translations['month'];
+        $this->year = $translations['year'];
     }
 
-    /**
-     * @return array<string,string|array<string,string>>
-     */
-    private function getTranslations(): array
+    public function applyCustomTranslations(array $customTranslations): void
     {
-        $path = __DIR__ . "/../locales/{$this->config->lang->value}.php";
-        return require $path;
+        foreach ($customTranslations as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
     }
 }

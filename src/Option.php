@@ -8,13 +8,14 @@ enum Option
 {
     /**
      * Display "Online" if date interval within 60 seconds.
-     * After 60 seconds output will be the same as usually "x time ago" format.
-     * Incompatible with option JUST_NOW.
+     * After 60 seconds output will be the same as usually
+     * "x time ago" format. Incompatible with option JUST_NOW.
      */
     case ONLINE;
 
     /**
-     * Remove suffix from date and have "5 minutes" instead of "5 minutes ago".
+     * Remove suffix from date and have the output like "5 minutes"
+     * instead of "5 minutes ago".
      */
     case NO_SUFFIX;
 
@@ -24,4 +25,11 @@ enum Option
      * Incompatible with option ONLINE.
      */
     case JUST_NOW;
+
+    /**
+     * This option has no effect anymore if you try to use it. It's
+     * just for internal use. Behavior of this option is the same as
+     * default behavior, so there is no need to use this option anymore.
+     */
+    case UPCOMING;
 }

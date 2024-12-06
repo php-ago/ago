@@ -12,27 +12,17 @@ final class LangSet
     public string $online;
     public string $justNow;
 
-    /** @var array<string,string> */
-    public array $second;
+    public LangForm $second;
+    public LangForm $minute;
+    public LangForm $hour;
+    public LangForm $day;
+    public LangForm $week;
+    public LangForm $month;
+    public LangForm $year;
 
-    /** @var array<string,string> */
-    public array $minute;
-
-    /** @var array<string,string> */
-    public array $hour;
-
-    /** @var array<string,string> */
-    public array $day;
-
-    /** @var array<string,string> */
-    public array $week;
-
-    /** @var array<string,string> */
-    public array $month;
-
-    /** @var array<string,string> */
-    public array $year;
-
+    /**
+     * @param array<string,mixed> $translations
+     */
     public function __construct(array $translations)
     {
         $this->lang = $translations['lang'];
@@ -40,18 +30,19 @@ final class LangSet
         $this->ago = $translations['ago'];
         $this->online = $translations['online'];
         $this->justNow = $translations['justnow'];
-        $this->second = $translations['second'];
-        $this->minute = $translations['minute'];
-        $this->hour = $translations['hour'];
-        $this->day = $translations['day'];
-        $this->week = $translations['week'];
-        $this->month = $translations['month'];
-        $this->year = $translations['year'];
+
+        $this->second = new LangForm($translations['second']);
+        $this->minute = new LangForm($translations['minute']);
+        $this->hour = new LangForm($translations['hour']);
+        $this->day = new LangForm($translations['day']);
+        $this->week = new LangForm($translations['week']);
+        $this->month = new LangForm($translations['month']);
+        $this->year = new LangForm($translations['year']);
     }
 
-    public function applyCustomTranslations(array $customTranslations): void
+    public function applyCustomTranslations(LangSet $customLangSet): void
     {
-        foreach ($customTranslations as $key => $value) {
+        foreach (get_object_vars($customLangSet) as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }

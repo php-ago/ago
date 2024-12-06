@@ -6,6 +6,9 @@ namespace Serhii\Ago;
 
 class Config
 {
+    public Lang $lang = Lang::EN;
+    public LangSet|null $customTranslations = null;
+
     /**
      * @param Lang|null $lang Language code following ISO 639-1
      * standard. Default is English.
@@ -14,9 +17,9 @@ class Config
      * will override default translations with the same keys. Use
      * it to add or change translations. Default is null.
      */
-    public function __construct(
-        public readonly Lang|null $lang = Lang::EN,
-        public readonly LangSet|null $customTranslations = null,
-    ) {
+    public function __construct(Lang|null $lang = null, LangSet|null $customTranslations = null)
+    {
+        $this->lang = $lang ?? Lang::EN;
+        $this->customTranslations = $customTranslations;
     }
 }

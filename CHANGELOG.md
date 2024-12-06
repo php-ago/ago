@@ -1,8 +1,8 @@
 # Release Notes
 
-## v4.0.0 (2024-12-03)
+## v4.0.0 (2024-12-06)
 - Breaking changes
-    - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`
+    - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1`
     - ⚠️ Remove `UPCOMING` option that was deprecate in version `3`
     - ⚠️ The `Option` class is now an enum with the following values: `ONLINE`, `NO_SUFFIX`, `JUST_NOW`
 - Improvements

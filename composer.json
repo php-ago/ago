@@ -1,6 +1,6 @@
 {
     "name": "serhii/ago",
-    "description": "Converts given date into a nice readable format. Supports russian and english. Example will be '1 hour ago', '2 days ago', '1 second ago', 'Online' and so.",
+    "description": "Transforms a given date into a human-readable \"time ago\" format with multilingual support. Example outputs include \"1 hour ago\", \"2 days ago\", \"Just now\", and \"Online\". The results are fully customizable to fit your specific needs",
     "homepage": "https://php-ago.github.io/",
     "keywords": ["time ago", "library", "html", "date", "datetime"],
     "type": "library",
@@ -26,7 +26,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "nesbot/carbon": "^3.8.2"
     },
     "require-dev": {

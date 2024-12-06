@@ -6,3 +6,6 @@ parameters:
 	paths:
 		- src
 		- resources
+
+	ignoreErrors:
+		- '/Parameter #2 \$options of method Serhii\\Ago\\TimeAgo::transInternal\(\) expects array<int, Serhii\\Ago\\Option>, array<int\|string, Serhii\\Ago\\Option> given\./'

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-use Carbon\CarbonImmutable;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Serhii\Ago\Exceptions\InvalidDateFormatException;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
@@ -59,9 +59,9 @@ final class TimeAgo
     private function transInternal(int|string|DateTimeInterface $date, array $options): string
     {
         $dateTime = match (true) {
-            is_int($date) => CarbonImmutable::createFromTimestamp($date),
-            is_string($date) => CarbonImmutable::parse($date),
-            $date instanceof DateTimeInterface => CarbonImmutable::instance($date),
+            is_int($date) => $date,
+            is_string($date) => (new DateTimeImmutable($date))->getTimestamp(),
+            $date instanceof DateTimeInterface => $date->getTimestamp(),
         };
 
         return $this->handle($dateTime, $options);
@@ -70,7 +70,7 @@ final class TimeAgo
     /**
      * @param array<int,Option> $options
      */
-    private function handle(CarbonImmutable $dateTime, array $options): string
+    private function handle(int $dateTime, array $options): string
     {
         $this->options = $options;
         $this->validateOptions();
@@ -112,10 +112,10 @@ final class TimeAgo
         return trim($result);
     }
 
-    private function computeTimeDifference(CarbonImmutable $dateTime): int
+    private function computeTimeDifference(int $dateTime): int
     {
-        $now = CarbonImmutable::now();
-        $result = (int) $dateTime->diffInSeconds($now);
+        $now = time();
+        $result = $now - $dateTime;
 
         if ($result < 0) {
             $this->enableOption(Option::UPCOMING);

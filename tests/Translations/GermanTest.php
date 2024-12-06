@@ -60,8 +60,8 @@ final class GermanTest extends TestCase
         TimeAgo::configure(new Config(lang: Lang::DE));
 
         $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
-        $this->assertContains($res, $expect, $msg);
+        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
+        $this->assertContains($result, $expect, $msg);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

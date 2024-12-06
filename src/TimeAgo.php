@@ -103,24 +103,26 @@ final class TimeAgo
 
     private function mergeFinalOutput(int $timeNum, string $timeUnit, string $suffix, LangSet $langSet): string
     {
-        return str_replace(
+        $result = str_replace(
             ['{timeUnit}', '{num}', '{ago}'],
-            [$timeUnit, $timeNum, $suffix],
+            [$timeUnit, (string) $timeNum, $suffix],
             $langSet->format,
         );
+
+        return trim($result);
     }
 
     private function computeTimeDifference(CarbonImmutable $dateTime): int
     {
         $now = CarbonImmutable::now();
-        $diff = (int) $dateTime->diffInSeconds($now);
+        $result = (int) $dateTime->diffInSeconds($now);
 
-        if ($diff < 0) {
+        if ($result < 0) {
             $this->enableOption(Option::UPCOMING);
-            return -$diff;
+            return -$result;
         }
 
-        return $diff;
+        return $result;
     }
 
     private function computeSuffix(LangSet $langSet): string

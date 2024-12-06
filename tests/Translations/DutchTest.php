@@ -17,6 +17,7 @@ final class DutchTest extends TestCase
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::NL));
+
         $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
         $this->assertSame($expect, TimeAgo::trans($date));
     }
@@ -68,8 +69,8 @@ final class DutchTest extends TestCase
         TimeAgo::configure(new Config(lang: Lang::NL));
 
         $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
-        $this->assertContains($res, $expect, $msg);
+        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
+        $this->assertContains($result, $expect, $msg);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
@@ -78,7 +79,9 @@ final class DutchTest extends TestCase
             [0, ['0 seconden geleden', '1 seconde geleden']],
             [1, ['1 seconde geleden', '2 seconden geleden']],
             [2, ['2 seconden geleden', '3 seconden geleden']],
+            [5, ['5 seconden geleden', '6 seconden geleden']],
             [30, ['30 seconden geleden', '31 seconden geleden']],
+            [42, ['42 seconden geleden', '43 seconden geleden']],
             [58, ['58 seconden geleden', '59 seconden geleden']],
         ];
     }

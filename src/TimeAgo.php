@@ -80,7 +80,6 @@ final class TimeAgo
         $this->validateOptions();
 
         $timeInSec = $this->computeTimeDifference($dateTime);
-
         $translations = $this->langLoader->load($this->config->lang);
 
         $langSet = new LangSet($translations);
@@ -214,12 +213,12 @@ final class TimeAgo
     {
         return new TimeNumber(
             seconds: $timeInSec,
-            minutes: (int) round($timeInSec / 60),
-            hours: (int) round($timeInSec / 3600),
-            days: (int) round($timeInSec / 86400),
-            weeks: (int) round($timeInSec / 604800),
-            months: (int) round($timeInSec / 2629440),
-            years: (int) round($timeInSec / 31553280),
+            minutes: (int) floor($timeInSec / 60),
+            hours: (int) floor($timeInSec / 3600),
+            days: (int) floor($timeInSec / 86400),
+            weeks: (int) floor($timeInSec / 604800),
+            months: (int) floor($timeInSec / 2629440),
+            years: (int) floor($timeInSec / 31553280),
         );
     }
 

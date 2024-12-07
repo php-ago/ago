@@ -32,4 +32,11 @@ enum Option
      * default behavior, so there is no need to use this option anymore.
      */
     case UPCOMING;
+
+    /**
+     * When you call "trans" method with this option, it will reset
+     * your configurations to default values. It's especially useful
+     * in testing environment when you need to reset configurations
+     */
+    case RESET_CONF;
 }

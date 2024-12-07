@@ -24,6 +24,7 @@ final class TimeAgoTest extends TestCase
     {
         return [
             [strtotime('now - 40 seconds'), 'Online', [Option::ONLINE], new Config(lang: Lang::EN)],
+            [strtotime('now - 40 seconds'), 'Online', [Option::ONLINE], new Config(lang: Lang::EN)],
             [strtotime('now - 33 seconds'), 'Just now', [Option::JUST_NOW], new Config(lang: Lang::EN)],
             [strtotime('now - 40 seconds'), 'В сети', [Option::ONLINE], new Config(lang: Lang::RU)],
             [strtotime('now - 33 seconds'), 'Только что', [Option::JUST_NOW], new Config(lang: Lang::RU)],
@@ -54,6 +55,26 @@ final class TimeAgoTest extends TestCase
             [strtotime('now - 100 years'), '100 years ago', [], new Config(lang: Lang::EN)],
             [strtotime('now - 101 years'), '101 years ago', [], new Config(lang: Lang::EN)],
             [strtotime('now - 121 year'), '121 jaar geleden', [], new Config(lang: Lang::NL)],
+        ];
+    }
+
+    #[DataProvider('providerForDateEdges')]
+    public function testDateEdges(string $input, string $expect): void
+    {
+        $fullMonths = ['1', '3', '5', '7', '8', '10', '12'];
+        $currMonth = date('n');
+
+        if (!in_array($currMonth, $fullMonths, strict: true)) {
+            $this->markTestSkipped("Current month doesn't have 31 days. Test skipped");
+        }
+
+        $this->assertSame($expect, TimeAgo::trans(strtotime($input), Option::RESET_CONF));
+    }
+
+    public static function providerForDateEdges(): array
+    {
+        return [
+            ['now - 31 days', '1 month ago'],
         ];
     }
 }

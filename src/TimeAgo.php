@@ -76,8 +76,7 @@ final class TimeAgo
      */
     private function handle(int $dateTime, array $options): string
     {
-        $this->options = $options;
-        $this->validateOptions();
+        $this->handleOptions($options);
 
         $timeInSec = $this->computeTimeDifference($dateTime);
         $translations = $this->langLoader->load($this->config->lang);
@@ -102,6 +101,21 @@ final class TimeAgo
         $suffix = $this->computeSuffix($langSet);
 
         return $this->mergeFinalOutput($timeNum, $timeUnit, $suffix, $langSet);
+    }
+
+    /**
+     * @param array<int,Option> $options
+     *
+     * @throws InvalidOptionsException
+     */
+    private function handleOptions(array $options): void
+    {
+        $this->options = $options;
+        $this->validateOptions();
+
+        if ($this->isEnabled(Option::RESET_CONF)) {
+            $this->config = new Config();
+        }
     }
 
     private function mergeFinalOutput(int $timeNum, string $timeUnit, string $suffix, LangSet $langSet): string
@@ -213,12 +227,12 @@ final class TimeAgo
     {
         return new TimeNumber(
             seconds: $timeInSec,
-            minutes: (int) floor($timeInSec / 60),
-            hours: (int) floor($timeInSec / 3600),
-            days: (int) floor($timeInSec / 86400),
-            weeks: (int) floor($timeInSec / 604800),
-            months: (int) floor($timeInSec / 2629440),
-            years: (int) floor($timeInSec / 31553280),
+            minutes: (int) round($timeInSec / 60),
+            hours: (int) round($timeInSec / 3600),
+            days: (int) round($timeInSec / 86400),
+            weeks: (int) round($timeInSec / 604800),
+            months: (int) round($timeInSec / 2629440),
+            years: (int) round($timeInSec / 31553280),
         );
     }
 

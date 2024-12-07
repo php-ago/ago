@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
@@ -14,43 +13,41 @@ use Serhii\Ago\TimeAgo;
 final class EnglishTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $expect): void
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::EN));
-
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($expect, TimeAgo::trans($date));
+        $this->assertSame($expect, TimeAgo::trans(strtotime($input)));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subSeconds', 60, '1 minute ago'],
-            ['subMinutes', 1, '1 minute ago'],
-            ['subMinutes', 2, '2 minutes ago'],
-            ['subMinutes', 3, '3 minutes ago'],
-            ['subMinutes', 4, '4 minutes ago'],
-            ['subMinutes', 5, '5 minutes ago'],
-            ['subMinutes', 11, '11 minutes ago'],
-            ['subMinutes', 59, '59 minutes ago'],
-            ['subMinutes', 60, '1 hour ago'],
-            ['subHours', 1, '1 hour ago'],
-            ['subHours', 4, '4 hours ago'],
-            ['subHours', 13, '13 hours ago'],
-            ['subHours', 24, '1 day ago'],
-            ['subDays', 2, '2 days ago'],
-            ['subDays', 7, '1 week ago'],
-            ['subWeeks', 2, '2 weeks ago'],
-            ['subMonths', 1, '1 month ago'],
-            ['subMonths', 2, '2 months ago'],
-            ['subMonths', 11, '11 months ago'],
-            ['subMonths', 12, '1 year ago'],
-            ['subYears', 5, '5 years ago'],
-            ['subYears', 21, '21 years ago'],
-            ['subYears', 31, '31 years ago'],
-            ['subYears', 41, '41 years ago'],
-            ['subYears', 100, '100 years ago'],
-            ['subYears', 101, '101 years ago'],
+            ['now - 60 seconds', '1 minute ago'],
+            ['now - 1 minute', '1 minute ago'],
+            ['now - 2 minutes', '2 minutes ago'],
+            ['now - 3 minutes', '3 minutes ago'],
+            ['now - 4 minutes', '4 minutes ago'],
+            ['now - 5 minutes', '5 minutes ago'],
+            ['now - 11 minutes', '11 minutes ago'],
+            ['now - 59 minutes', '59 minutes ago'],
+            ['now - 60 minutes', '1 hour ago'],
+            ['now - 1 hour', '1 hour ago'],
+            ['now - 4 hours', '4 hours ago'],
+            ['now - 13 hours', '13 hours ago'],
+            ['now - 24 hours', '1 day ago'],
+            ['now - 2 days', '2 days ago'],
+            ['now - 7 days', '1 week ago'],
+            ['now - 2 weeks', '2 weeks ago'],
+            ['now - 1 month', '1 month ago'],
+            ['now - 2 months', '2 months ago'],
+            ['now - 11 months', '11 months ago'],
+            ['now - 12 months', '1 year ago'],
+            ['now - 5 years', '5 years ago'],
+            ['now - 21 years', '21 years ago'],
+            ['now - 31 years', '31 years ago'],
+            ['now - 41 years', '41 years ago'],
+            ['now - 100 years', '100 years ago'],
+            ['now - 101 years', '101 years ago'],
         ];
     }
 
@@ -59,9 +56,8 @@ final class EnglishTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::EN));
 
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
-        $this->assertContains($result, $expect, $msg);
+        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $this->assertContains($result, $expect);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
@@ -14,83 +13,81 @@ use Serhii\Ago\TimeAgo;
 final class RussianTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $expect): void
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::RU));
-
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($expect, TimeAgo::trans($date));
+        $this->assertSame($expect, TimeAgo::trans(strtotime($input)));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subSeconds', 60, '1 минута назад'],
-            ['subMinutes', 1, '1 минута назад'],
-            ['subMinutes', 2, '2 минуты назад'],
-            ['subMinutes', 3, '3 минуты назад'],
-            ['subMinutes', 4, '4 минуты назад'],
-            ['subMinutes', 5, '5 минут назад'],
-            ['subMinutes', 6, '6 минут назад'],
-            ['subMinutes', 7, '7 минут назад'],
-            ['subMinutes', 8, '8 минут назад'],
-            ['subMinutes', 9, '9 минут назад'],
-            ['subMinutes', 10, '10 минут назад'],
-            ['subMinutes', 11, '11 минут назад'],
-            ['subMinutes', 12, '12 минут назад'],
-            ['subMinutes', 13, '13 минут назад'],
-            ['subMinutes', 14, '14 минут назад'],
-            ['subMinutes', 15, '15 минут назад'],
-            ['subMinutes', 16, '16 минут назад'],
-            ['subMinutes', 21, '21 минута назад'],
-            ['subMinutes', 22, '22 минуты назад'],
-            ['subMinutes', 23, '23 минуты назад'],
-            ['subMinutes', 24, '24 минуты назад'],
-            ['subMinutes', 25, '25 минут назад'],
-            ['subMinutes', 59, '59 минут назад'],
-            ['subMinutes', 59, '59 минут назад'],
-            ['subMinutes', 60, '1 час назад'],
-            ['subHours', 1, '1 час назад'],
-            ['subHours', 2, '2 часа назад'],
-            ['subHours', 3, '3 часа назад'],
-            ['subHours', 4, '4 часа назад'],
-            ['subHours', 5, '5 часов назад'],
-            ['subHours', 6, '6 часов назад'],
-            ['subHours', 7, '7 часов назад'],
-            ['subHours', 8, '8 часов назад'],
-            ['subHours', 9, '9 часов назад'],
-            ['subHours', 10, '10 часов назад'],
-            ['subHours', 11, '11 часов назад'],
-            ['subHours', 12, '12 часов назад'],
-            ['subHours', 13, '13 часов назад'],
-            ['subHours', 14, '14 часов назад'],
-            ['subHours', 15, '15 часов назад'],
-            ['subHours', 16, '16 часов назад'],
-            ['subHours', 17, '17 часов назад'],
-            ['subHours', 18, '18 часов назад'],
-            ['subHours', 19, '19 часов назад'],
-            ['subHours', 20, '20 часов назад'],
-            ['subHours', 21, '21 час назад'],
-            ['subHours', 22, '22 часа назад'],
-            ['subHours', 23, '23 часа назад'],
-            ['subHours', 24, '1 день назад'],
-            ['subDays', 2, '2 дня назад'],
-            ['subDays', 7, '1 неделя назад'],
-            ['subWeeks', 2, '2 недели назад'],
-            ['subMonths', 1, '1 месяц назад'],
-            ['subMonths', 2, '2 месяца назад'],
-            ['subMonths', 11, '11 месяцев назад'],
-            ['subMonths', 12, '1 год назад'],
-            ['subYears', 2, '2 года назад'],
-            ['subYears', 5, '5 лет назад'],
-            ['subYears', 8, '8 лет назад'],
-            ['subYears', 21, '21 год назад'],
-            ['subYears', 22, '22 года назад'],
-            ['subYears', 30, '30 лет назад'],
-            ['subYears', 31, '31 год назад'],
-            ['subYears', 41, '41 год назад'],
-            ['subYears', 100, '100 лет назад'],
-            ['subYears', 101, '101 год назад'],
+            ['now - 60 seconds', '1 минута назад'],
+            ['now - 1 minute', '1 минута назад'],
+            ['now - 2 minutes', '2 минуты назад'],
+            ['now - 3 minutes', '3 минуты назад'],
+            ['now - 4 minutes', '4 минуты назад'],
+            ['now - 5 minutes', '5 минут назад'],
+            ['now - 6 minutes', '6 минут назад'],
+            ['now - 7 minutes', '7 минут назад'],
+            ['now - 8 minutes', '8 минут назад'],
+            ['now - 9 minutes', '9 минут назад'],
+            ['now - 10 minutes', '10 минут назад'],
+            ['now - 11 minutes', '11 минут назад'],
+            ['now - 12 minutes', '12 минут назад'],
+            ['now - 13 minutes', '13 минут назад'],
+            ['now - 14 minutes', '14 минут назад'],
+            ['now - 15 minutes', '15 минут назад'],
+            ['now - 16 minutes', '16 минут назад'],
+            ['now - 21 minutes', '21 минута назад'],
+            ['now - 22 minutes', '22 минуты назад'],
+            ['now - 23 minutes', '23 минуты назад'],
+            ['now - 24 minutes', '24 минуты назад'],
+            ['now - 25 minutes', '25 минут назад'],
+            ['now - 59 minutes', '59 минут назад'],
+            ['now - 59 minutes', '59 минут назад'],
+            ['now - 60 minutes', '1 час назад'],
+            ['now - 1 hour', '1 час назад'],
+            ['now - 2 hours', '2 часа назад'],
+            ['now - 3 hours', '3 часа назад'],
+            ['now - 4 hours', '4 часа назад'],
+            ['now - 5 hours', '5 часов назад'],
+            ['now - 6 hours', '6 часов назад'],
+            ['now - 7 hours', '7 часов назад'],
+            ['now - 8 hours', '8 часов назад'],
+            ['now - 9 hours', '9 часов назад'],
+            ['now - 10 hours', '10 часов назад'],
+            ['now - 11 hours', '11 часов назад'],
+            ['now - 12 hours', '12 часов назад'],
+            ['now - 13 hours', '13 часов назад'],
+            ['now - 14 hours', '14 часов назад'],
+            ['now - 15 hours', '15 часов назад'],
+            ['now - 16 hours', '16 часов назад'],
+            ['now - 17 hours', '17 часов назад'],
+            ['now - 18 hours', '18 часов назад'],
+            ['now - 19 hours', '19 часов назад'],
+            ['now - 20 hours', '20 часов назад'],
+            ['now - 21 hours', '21 час назад'],
+            ['now - 22 hours', '22 часа назад'],
+            ['now - 23 hours', '23 часа назад'],
+            ['now - 24 hours', '1 день назад'],
+            ['now - 2 days', '2 дня назад'],
+            ['now - 7 days', '1 неделя назад'],
+            ['now - 2 weeks', '2 недели назад'],
+            ['now - 1 month', '1 месяц назад'],
+            ['now - 2 months', '2 месяца назад'],
+            ['now - 11 months', '11 месяцев назад'],
+            ['now - 12 months', '1 год назад'],
+            ['now - 2 years', '2 года назад'],
+            ['now - 5 years', '5 лет назад'],
+            ['now - 8 years', '8 лет назад'],
+            ['now - 21 years', '21 год назад'],
+            ['now - 22 years', '22 года назад'],
+            ['now - 30 years', '30 лет назад'],
+            ['now - 31 years', '31 год назад'],
+            ['now - 41 years', '41 год назад'],
+            ['now - 100 years', '100 лет назад'],
+            ['now - 101 years', '101 год назад'],
         ];
     }
 
@@ -99,9 +96,8 @@ final class RussianTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::RU));
 
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
-        $this->assertContains($result, $expect, $msg);
+        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $this->assertContains($result, $expect);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

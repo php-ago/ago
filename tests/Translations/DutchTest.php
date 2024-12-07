@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
@@ -14,52 +13,50 @@ use Serhii\Ago\TimeAgo;
 final class DutchTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $expect): void
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::NL));
-
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($expect, TimeAgo::trans($date));
+        $this->assertSame($expect, TimeAgo::trans(strtotime($input)));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subMinutes', 1, '1 minuut geleden'],
-            ['subMinutes', 2, '2 minuten geleden'],
-            ['subMinutes', 3, '3 minuten geleden'],
-            ['subMinutes', 4, '4 minuten geleden'],
-            ['subMinutes', 5, '5 minuten geleden'],
-            ['subMinutes', 6, '6 minuten geleden'],
-            ['subMinutes', 7, '7 minuten geleden'],
-            ['subMinutes', 8, '8 minuten geleden'],
-            ['subMinutes', 9, '9 minuten geleden'],
-            ['subMinutes', 10, '10 minuten geleden'],
-            ['subMinutes', 11, '11 minuten geleden'],
-            ['subMinutes', 50, '50 minuten geleden'],
-            ['subMinutes', 55, '55 minuten geleden'],
-            ['subMinutes', 59, '59 minuten geleden'],
-            ['subMinutes', 60, '1 uur geleden'],
-            ['subHours', 1, '1 uur geleden'],
-            ['subHours', 2, '2 uur geleden'],
-            ['subHours', 3, '3 uur geleden'],
-            ['subHours', 4, '4 uur geleden'],
-            ['subHours', 13, '13 uur geleden'],
-            ['subHours', 24, '1 dag geleden'],
-            ['subDays', 2, '2 dagen geleden'],
-            ['subDays', 3, '3 dagen geleden'],
-            ['subDays', 7, '1 week geleden'],
-            ['subWeeks', 2, '2 weken geleden'],
-            ['subMonths', 1, '1 maand geleden'],
-            ['subMonths', 2, '2 maanden geleden'],
-            ['subMonths', 11, '11 maanden geleden'],
-            ['subMonths', 12, '1 jaar geleden'],
-            ['subYears', 5, '5 jaar geleden'],
-            ['subYears', 21, '21 jaar geleden'],
-            ['subYears', 31, '31 jaar geleden'],
-            ['subYears', 41, '41 jaar geleden'],
-            ['subYears', 100, '100 jaar geleden'],
-            ['subYears', 101, '101 jaar geleden'],
+            ['now - 1 minutes', '1 minuut geleden'],
+            ['now - 2 minutes', '2 minuten geleden'],
+            ['now - 3 minutes', '3 minuten geleden'],
+            ['now - 4 minutes', '4 minuten geleden'],
+            ['now - 5 minutes', '5 minuten geleden'],
+            ['now - 6 minutes', '6 minuten geleden'],
+            ['now - 7 minutes', '7 minuten geleden'],
+            ['now - 8 minutes', '8 minuten geleden'],
+            ['now - 9 minutes', '9 minuten geleden'],
+            ['now - 10 minutes', '10 minuten geleden'],
+            ['now - 11 minutes', '11 minuten geleden'],
+            ['now - 50 minutes', '50 minuten geleden'],
+            ['now - 55 minutes', '55 minuten geleden'],
+            ['now - 59 minutes', '59 minuten geleden'],
+            ['now - 60 minutes', '1 uur geleden'],
+            ['now - 1 hours', '1 uur geleden'],
+            ['now - 2 hours', '2 uur geleden'],
+            ['now - 3 hours', '3 uur geleden'],
+            ['now - 4 hours', '4 uur geleden'],
+            ['now - 13 hours', '13 uur geleden'],
+            ['now - 24 hours', '1 dag geleden'],
+            ['now - 2 days', '2 dagen geleden'],
+            ['now - 3 days', '3 dagen geleden'],
+            ['now - 7 days', '1 week geleden'],
+            ['now - 2 weeks', '2 weken geleden'],
+            ['now - 1 months', '1 maand geleden'],
+            ['now - 2 months', '2 maanden geleden'],
+            ['now - 11 months', '11 maanden geleden'],
+            ['now - 12 months', '1 jaar geleden'],
+            ['now - 5 years', '5 jaar geleden'],
+            ['now - 21 years', '21 jaar geleden'],
+            ['now - 31 years', '31 jaar geleden'],
+            ['now - 41 years', '41 jaar geleden'],
+            ['now - 100 years', '100 jaar geleden'],
+            ['now - 101 years', '101 jaar geleden'],
         ];
     }
 
@@ -68,9 +65,8 @@ final class DutchTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::NL));
 
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
-        $this->assertContains($result, $expect, $msg);
+        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $this->assertContains($result, $expect);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

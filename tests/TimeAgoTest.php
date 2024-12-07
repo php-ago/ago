@@ -14,7 +14,7 @@ use Serhii\Ago\TimeAgo;
 final class TimeAgoTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTime')]
-    public function testReturnsCorrectTime($date, string $expect, array $options, Config $config): void
+    public function testReturnsCorrectTime(mixed $date, string $expect, array $options, Config $config): void
     {
         TimeAgo::configure($config);
         $this->assertSame($expect, TimeAgo::trans($date, ...$options));

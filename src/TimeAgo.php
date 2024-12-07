@@ -129,7 +129,7 @@ final class TimeAgo
         $result = $now - $dateTime;
 
         if ($result < 0) {
-            $this->enableOption(Option::UPCOMING);
+            $this->enableUpcomingOption();
             return -$result;
         }
 
@@ -180,12 +180,7 @@ final class TimeAgo
     private function computeTimeUnit(LangForm $langForm, int $timeNum): string
     {
         $form = $this->timeUnitForm($timeNum);
-
-        if (isset($langForm->{$form})) {
-            return $langForm->{$form};
-        }
-
-        return $langForm->other;
+        return $langForm->{$form} ?? $langForm->other;
     }
 
     /**
@@ -240,13 +235,13 @@ final class TimeAgo
         return in_array($option, haystack: $this->options, strict: true);
     }
 
-    private function enableOption(Option $option): void
+    private function enableUpcomingOption(): void
     {
-        if ($this->isEnabled($option)) {
+        if ($this->isEnabled(Option::UPCOMING)) {
             return;
         }
 
-        $this->options[] = $option;
+        $this->options[] = Option::UPCOMING;
     }
 
     /**

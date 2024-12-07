@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
@@ -14,72 +13,70 @@ use Serhii\Ago\TimeAgo;
 final class UkrainianTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $output): void
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $output): void
     {
         TimeAgo::configure(new Config(lang: Lang::UK));
-
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($output, TimeAgo::trans($date));
+        $this->assertSame($output, TimeAgo::trans(strtotime($input)));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subSeconds', 60, '1 хвилина тому'],
-            ['subMinutes', 1, '1 хвилина тому'],
-            ['subMinutes', 2, '2 хвилини тому'],
-            ['subMinutes', 3, '3 хвилини тому'],
-            ['subMinutes', 4, '4 хвилини тому'],
-            ['subMinutes', 5, '5 хвилин тому'],
-            ['subMinutes', 6, '6 хвилин тому'],
-            ['subMinutes', 7, '7 хвилин тому'],
-            ['subMinutes', 8, '8 хвилин тому'],
-            ['subMinutes', 9, '9 хвилин тому'],
-            ['subMinutes', 10, '10 хвилин тому'],
-            ['subMinutes', 11, '11 хвилин тому'],
-            ['subMinutes', 12, '12 хвилин тому'],
-            ['subMinutes', 13, '13 хвилин тому'],
-            ['subMinutes', 59, '59 хвилин тому'],
-            ['subMinutes', 60, '1 година тому'],
-            ['subHours', 1, '1 година тому'],
-            ['subHours', 2, '2 години тому'],
-            ['subHours', 3, '3 години тому'],
-            ['subHours', 4, '4 години тому'],
-            ['subHours', 5, '5 годин тому'],
-            ['subHours', 6, '6 годин тому'],
-            ['subHours', 7, '7 годин тому'],
-            ['subHours', 8, '8 годин тому'],
-            ['subHours', 9, '9 годин тому'],
-            ['subHours', 10, '10 годин тому'],
-            ['subHours', 11, '11 годин тому'],
-            ['subHours', 12, '12 годин тому'],
-            ['subHours', 13, '13 годин тому'],
-            ['subHours', 14, '14 годин тому'],
-            ['subHours', 15, '15 годин тому'],
-            ['subHours', 16, '16 годин тому'],
-            ['subHours', 17, '17 годин тому'],
-            ['subHours', 18, '18 годин тому'],
-            ['subHours', 19, '19 годин тому'],
-            ['subHours', 20, '20 годин тому'],
-            ['subHours', 21, '21 година тому'],
-            ['subHours', 22, '22 години тому'],
-            ['subHours', 23, '23 години тому'],
-            ['subHours', 24, '1 день тому'],
-            ['subDays', 5, '5 днів тому'],
-            ['subDays', 2, '2 дні тому'],
-            ['subDays', 7, '1 тиждень тому'],
-            ['subWeeks', 2, '2 тижні тому'],
-            ['subMonths', 1, '1 місяць тому'],
-            ['subMonths', 2, '2 місяці тому'],
-            ['subMonths', 11, '11 місяців тому'],
-            ['subMonths', 12, '1 рік тому'],
-            ['subYears', 5, '5 років тому'],
-            ['subYears', 21, '21 рік тому'],
-            ['subYears', 30, '30 років тому'],
-            ['subYears', 31, '31 рік тому'],
-            ['subYears', 41, '41 рік тому'],
-            ['subYears', 100, '100 років тому'],
-            ['subYears', 101, '101 рік тому'],
+            ['now - 60 seconds', '1 хвилина тому'],
+            ['now - 1 minutes', '1 хвилина тому'],
+            ['now - 2 minutes', '2 хвилини тому'],
+            ['now - 3 minutes', '3 хвилини тому'],
+            ['now - 4 minutes', '4 хвилини тому'],
+            ['now - 5 minutes', '5 хвилин тому'],
+            ['now - 6 minutes', '6 хвилин тому'],
+            ['now - 7 minutes', '7 хвилин тому'],
+            ['now - 8 minutes', '8 хвилин тому'],
+            ['now - 9 minutes', '9 хвилин тому'],
+            ['now - 10 minutes', '10 хвилин тому'],
+            ['now - 11 minutes', '11 хвилин тому'],
+            ['now - 12 minutes', '12 хвилин тому'],
+            ['now - 13 minutes', '13 хвилин тому'],
+            ['now - 59 minutes', '59 хвилин тому'],
+            ['now - 60 minutes', '1 година тому'],
+            ['now - 1 hours', '1 година тому'],
+            ['now - 2 hours', '2 години тому'],
+            ['now - 3 hours', '3 години тому'],
+            ['now - 4 hours', '4 години тому'],
+            ['now - 5 hours', '5 годин тому'],
+            ['now - 6 hours', '6 годин тому'],
+            ['now - 7 hours', '7 годин тому'],
+            ['now - 8 hours', '8 годин тому'],
+            ['now - 9 hours', '9 годин тому'],
+            ['now - 10 hours', '10 годин тому'],
+            ['now - 11 hours', '11 годин тому'],
+            ['now - 12 hours', '12 годин тому'],
+            ['now - 13 hours', '13 годин тому'],
+            ['now - 14 hours', '14 годин тому'],
+            ['now - 15 hours', '15 годин тому'],
+            ['now - 16 hours', '16 годин тому'],
+            ['now - 17 hours', '17 годин тому'],
+            ['now - 18 hours', '18 годин тому'],
+            ['now - 19 hours', '19 годин тому'],
+            ['now - 20 hours', '20 годин тому'],
+            ['now - 21 hours', '21 година тому'],
+            ['now - 22 hours', '22 години тому'],
+            ['now - 23 hours', '23 години тому'],
+            ['now - 24 hours', '1 день тому'],
+            ['now - 5 days', '5 днів тому'],
+            ['now - 2 days', '2 дні тому'],
+            ['now - 7 days', '1 тиждень тому'],
+            ['now - 2 weeks', '2 тижні тому'],
+            ['now - 1 months', '1 місяць тому'],
+            ['now - 2 months', '2 місяці тому'],
+            ['now - 11 months', '11 місяців тому'],
+            ['now - 12 months', '1 рік тому'],
+            ['now - 5 years', '5 років тому'],
+            ['now - 21 years', '21 рік тому'],
+            ['now - 30 years', '30 років тому'],
+            ['now - 31 years', '31 рік тому'],
+            ['now - 41 years', '41 рік тому'],
+            ['now - 100 years', '100 років тому'],
+            ['now - 101 years', '101 рік тому'],
         ];
     }
 
@@ -89,9 +86,8 @@ final class UkrainianTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::UK));
 
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $msg = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $result = TimeAgo::trans($date));
-        $this->assertContains($result, $expect, $msg);
+        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $this->assertContains($result, $expect);
     }
 
     public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array

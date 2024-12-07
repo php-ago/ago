@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Serhii\Ago\Exceptions\InvalidDateFormatException;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
 use Serhii\Ago\Exceptions\MissingRuleException;
 use Serhii\Ago\Loader\LangLoader;
@@ -42,8 +40,6 @@ final class TimeAgo
      *
      * @throws MissingRuleException
      * @throws InvalidOptionsException
-     * @throws DateMalformedStringException
-     * @throws InvalidDateFormatException
      */
     public static function trans(int|string|DateTimeInterface $date, Option ...$options): string
     {
@@ -60,8 +56,6 @@ final class TimeAgo
      *
      * @throws MissingRuleException
      * @throws InvalidOptionsException
-     * @throws DateMalformedStringException
-     * @throws InvalidDateFormatException
      */
     private function transInternal(int|string|DateTimeInterface $date, array $options): string
     {
@@ -69,7 +63,6 @@ final class TimeAgo
             is_int($date) => $date,
             is_string($date) => (new DateTimeImmutable($date))->getTimestamp(),
             $date instanceof DateTimeInterface => $date->getTimestamp(),
-            default => throw new InvalidDateFormatException(),
         };
 
         return $this->handle($dateTime, $options);

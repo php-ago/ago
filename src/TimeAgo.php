@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
+use DateMalformedStringException;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Serhii\Ago\Exceptions\InvalidDateFormatException;
@@ -40,8 +41,9 @@ final class TimeAgo
      * Takes date string and returns converted and translated date
      *
      * @throws MissingRuleException
-     * @throws InvalidDateFormatException
      * @throws InvalidOptionsException
+     * @throws DateMalformedStringException
+     * @throws InvalidDateFormatException
      */
     public static function trans(int|string|DateTimeInterface $date, Option ...$options): string
     {
@@ -55,6 +57,11 @@ final class TimeAgo
 
     /**
      * @param array<int,Option> $options
+     *
+     * @throws MissingRuleException
+     * @throws InvalidOptionsException
+     * @throws DateMalformedStringException
+     * @throws InvalidDateFormatException
      */
     private function transInternal(int|string|DateTimeInterface $date, array $options): string
     {
@@ -62,6 +69,7 @@ final class TimeAgo
             is_int($date) => $date,
             is_string($date) => (new DateTimeImmutable($date))->getTimestamp(),
             $date instanceof DateTimeInterface => $date->getTimestamp(),
+            default => throw new InvalidDateFormatException(),
         };
 
         return $this->handle($dateTime, $options);
@@ -69,6 +77,9 @@ final class TimeAgo
 
     /**
      * @param array<int,Option> $options
+     *
+     * @throws MissingRuleException
+     * @throws InvalidOptionsException
      */
     private function handle(int $dateTime, array $options): string
     {
@@ -85,11 +96,11 @@ final class TimeAgo
             $langSet->applyCustomTranslations($this->config->customTranslations);
         }
 
-        if ($this->isEnabled(Option::ONLINE) && $timeInSec < 60) {
+        if ($timeInSec < 60 && $this->isEnabled(Option::ONLINE)) {
             return $langSet->online;
         }
 
-        if ($this->isEnabled(Option::JUST_NOW) && $timeInSec < 60) {
+        if ($timeInSec < 60 && $this->isEnabled(Option::JUST_NOW)) {
             return $langSet->justNow;
         }
 
@@ -163,6 +174,9 @@ final class TimeAgo
         return [$langSet->year, $timeNum->years];
     }
 
+    /**
+     * @throws MissingRuleException
+     */
     private function computeTimeUnit(LangForm $langForm, int $timeNum): string
     {
         $form = $this->timeUnitForm($timeNum);
@@ -174,6 +188,9 @@ final class TimeAgo
         return $langForm->other;
     }
 
+    /**
+     * @throws MissingRuleException
+     */
     private function timeUnitForm(int $timeNum): string
     {
         $rule = $this->identifyGrammarRules($timeNum);
@@ -188,13 +205,16 @@ final class TimeAgo
         };
     }
 
+    /**
+     * @throws MissingRuleException
+     */
     private function identifyGrammarRules(int $timeNum): Rule
     {
         $rules = $this->ruleLoader->load($timeNum);
         $lang = $this->config->lang->value;
 
-        foreach ($rules as $langs => $rule) {
-            if (str_contains($langs, $lang)) {
+        foreach ($rules as $languages => $rule) {
+            if (str_contains($languages, $lang)) {
                 return $rule;
             }
         }

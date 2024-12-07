@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-final class LangForm
+final readonly class LangForm
 {
-    public readonly ?string $zero;
-    public readonly ?string $one;
-    public readonly ?string $few;
-    public readonly ?string $many;
-    public readonly string $other;
+    public ?string $zero;
+    public ?string $one;
+    public ?string $few;
+    public ?string $many;
+    public string $other;
 
     /**
      * @param array<string,string> $translations

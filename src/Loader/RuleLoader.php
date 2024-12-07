@@ -7,7 +7,7 @@ namespace Serhii\Ago\Loader;
 use RuntimeException;
 use Serhii\Ago\Rule;
 
-final class RuleLoader
+final readonly class RuleLoader
 {
     public function __construct(private string $ruleDir)
     {

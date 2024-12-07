@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-final class TimeNumber
+final readonly class TimeNumber
 {
     public function __construct(
-        public readonly int $seconds,
-        public readonly int $minutes,
-        public readonly int $hours,
-        public readonly int $days,
-        public readonly int $weeks,
-        public readonly int $months,
-        public readonly int $years,
+        public int $seconds,
+        public int $minutes,
+        public int $hours,
+        public int $days,
+        public int $weeks,
+        public int $months,
+        public int $years,
     ) {
     }
 }

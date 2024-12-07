@@ -7,7 +7,7 @@ namespace Serhii\Ago\Loader;
 use RuntimeException;
 use Serhii\Ago\Lang;
 
-final class LangLoader
+final readonly class LangLoader
 {
     public function __construct(private string $langDir)
     {

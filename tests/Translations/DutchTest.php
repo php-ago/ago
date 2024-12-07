@@ -16,7 +16,7 @@ final class DutchTest extends TestCase
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::NL));
-        $this->assertSame($expect, TimeAgo::trans(strtotime($input)));
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
@@ -65,7 +65,7 @@ final class DutchTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::NL));
 
-        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $result = TimeAgo::trans("now - {$seconds} seconds");
         $this->assertContains($result, $expect);
     }
 

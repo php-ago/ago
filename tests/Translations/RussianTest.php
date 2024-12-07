@@ -16,7 +16,7 @@ final class RussianTest extends TestCase
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
         TimeAgo::configure(new Config(lang: Lang::RU));
-        $this->assertSame($expect, TimeAgo::trans(strtotime($input)));
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
@@ -96,7 +96,7 @@ final class RussianTest extends TestCase
     {
         TimeAgo::configure(new Config(lang: Lang::RU));
 
-        $result = TimeAgo::trans(strtotime("now - {$seconds} seconds"));
+        $result = TimeAgo::trans("now - {$seconds} seconds");
         $this->assertContains($result, $expect);
     }
 

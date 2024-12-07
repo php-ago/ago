@@ -120,26 +120,25 @@ final class TimeAgo
 
     private function mergeFinalOutput(int $timeNum, string $timeUnit, string $suffix, LangSet $langSet): string
     {
-        $result = str_replace(
+        $finalOutput = str_replace(
             ['{timeUnit}', '{num}', '{ago}'],
             [$timeUnit, (string) $timeNum, $suffix],
             $langSet->format,
         );
 
-        return trim($result);
+        return trim($finalOutput);
     }
 
     private function computeTimeDifference(int $dateTime): int
     {
-        $now = time();
-        $result = $now - $dateTime;
+        $diff = time() - $dateTime;
 
-        if ($result < 0) {
+        if ($diff < 0) {
             $this->enableUpcomingOption();
-            return -$result;
+            return -$diff;
         }
 
-        return $result;
+        return $diff;
     }
 
     private function computeSuffix(LangSet $langSet): string
@@ -227,12 +226,12 @@ final class TimeAgo
     {
         return new TimeNumber(
             seconds: $timeInSec,
-            minutes: (int) round($timeInSec / 60),
-            hours: (int) round($timeInSec / 3600),
-            days: (int) round($timeInSec / 86400),
-            weeks: (int) round($timeInSec / 604800),
-            months: (int) round($timeInSec / 2629440),
-            years: (int) round($timeInSec / 31553280),
+            minutes: (int) floor($timeInSec / 60),
+            hours: (int) floor($timeInSec / 3600),
+            days: (int) floor($timeInSec / 86400),
+            weeks: (int) floor($timeInSec / 604800),
+            months: (int) floor($timeInSec / 2629440),
+            years: (int) floor($timeInSec / 31553280),
         );
     }
 

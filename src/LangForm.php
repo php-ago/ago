@@ -6,21 +6,12 @@ namespace Serhii\Ago;
 
 final readonly class LangForm
 {
-    public ?string $zero;
-    public ?string $one;
-    public ?string $few;
-    public ?string $many;
-    public string $other;
-
-    /**
-     * @param array<string,string> $translations
-     */
-    public function __construct(array $translations)
-    {
-        $this->zero = $translations['zero'] ?? null;
-        $this->one = $translations['one'] ?? null;
-        $this->few = $translations['few'] ?? null;
-        $this->many = $translations['many'] ?? null;
-        $this->other = $translations['other'];
+    public function __construct(
+        public string $other,
+        public string|null $zero = null,
+        public string|null $one = null,
+        public string|null $few = null,
+        public string|null $many = null,
+    ) {
     }
 }

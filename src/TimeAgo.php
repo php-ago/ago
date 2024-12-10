@@ -217,7 +217,7 @@ final class TimeAgo
     private function identifyGrammarRules(int $timeNum): Rule
     {
         $rules = $this->ruleLoader->load($timeNum);
-        $lang = $this->config->lang->value;
+        $lang = $this->config->lang;
 
         foreach ($rules as $languages => $rule) {
             if (str_contains($languages, $lang)) {

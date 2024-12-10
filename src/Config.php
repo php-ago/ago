@@ -6,22 +6,21 @@ namespace Serhii\Ago;
 
 class Config
 {
-    public Lang $lang = Lang::EN;
+    public string $lang = Lang::EN;
 
     /**
-     * @var array<int,LangSet>
+     * @var array<int,LangOverride>
      */
     public array $overrides = [];
 
     /**
-     * @param Lang|null $lang Language code from the Lang enum
-     * Default is English.
+     * @param string|null $lang Language code ISO 639-1.
+     * Default is English (en).
      *
-     * @param array<int,LangSet> $overrides Overrides will
-     * override default translations with the same keys. Use
-     * it to add or change translations.
+     * @param array<int,LangOverride>|null $overrides Overrides will override
+     * default translations.
      */
-    public function __construct(Lang|null $lang = null, array|null $overrides = [])
+    public function __construct(string|null $lang = null, array|null $overrides = [])
     {
         $this->lang = $lang ?? Lang::EN;
         $this->overrides = $overrides ?? [];

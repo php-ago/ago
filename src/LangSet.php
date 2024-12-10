@@ -31,13 +31,13 @@ final class LangSet
         $this->online = $translations['online'];
         $this->justNow = $translations['justnow'];
 
-        $this->second = new LangForm($translations['second']);
-        $this->minute = new LangForm($translations['minute']);
-        $this->hour = new LangForm($translations['hour']);
-        $this->day = new LangForm($translations['day']);
-        $this->week = new LangForm($translations['week']);
-        $this->month = new LangForm($translations['month']);
-        $this->year = new LangForm($translations['year']);
+        $this->second = new LangForm(...$translations['second']);
+        $this->minute = new LangForm(...$translations['minute']);
+        $this->hour = new LangForm(...$translations['hour']);
+        $this->day = new LangForm(...$translations['day']);
+        $this->week = new LangForm(...$translations['week']);
+        $this->month = new LangForm(...$translations['month']);
+        $this->year = new LangForm(...$translations['year']);
     }
 
     /**

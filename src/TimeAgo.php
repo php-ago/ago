@@ -49,11 +49,24 @@ final class TimeAgo
 
     public static function configure(Config $config): void
     {
+        $inst = self::singleton();
+
+        if ($config->lang !== Lang::EN) {
+            $inst->config->lang = $config->lang;
+        }
+
+        if ($config->overwrites !== []) {
+            $inst->config->overwrites = array_merge($inst->config->overwrites, $config->overwrites);
+        }
+    }
+
+    public static function reconfigure(Config $config): void
+    {
         self::singleton()->config = $config;
     }
 
     /**
-     * @param array<int,Option> $options
+     * @param Option[] $options
      *
      * @throws MissingRuleException
      * @throws InvalidOptionsException
@@ -89,7 +102,7 @@ final class TimeAgo
 
         $langSet = new LangSet($translations);
 
-        if ($this->config->overwrites) {
+        if (!empty($this->config->overwrites)) {
             $langSet->applyOverwrites($this->config->overwrites);
         }
 
@@ -219,13 +232,13 @@ final class TimeAgo
         $rules = $this->ruleLoader->load($timeNum);
         $lang = $this->config->lang;
 
-        foreach ($rules as $languages => $rule) {
-            if (str_contains($languages, $lang)) {
+        foreach ($rules as $rule) {
+            if (in_array($lang, $rule->langs)) {
                 return $rule;
             }
         }
 
-        throw new MissingRuleException($lang);
+        throw new MissingRuleException($lang->value);
     }
 
     private function calculateTimeNum(int $timeInSec): TimeNumber

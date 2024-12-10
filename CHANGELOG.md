@@ -4,6 +4,8 @@
 - Breaking changes
     - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1`
     - ⚠️ The `Option` class is now an enum instead of a class
+    - ⚠️ Remove `Serhii\TimeAgo\Lang::set()` method
+    - ⚠️ Change `Serhii\TimeAgo\Lang` class into an enum type
 - Improvements
     - 🧑‍💻 Codebase refactoring and cleanup
     - 🧑‍💻 Remove `InvalidDateFormatException` exception that was thrown from `TimeAgo::trans()` in the version `3`

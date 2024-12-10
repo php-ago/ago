@@ -15,7 +15,7 @@ final class GermanTest extends TestCase
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
-        TimeAgo::configure(new Config(lang: Lang::DE));
+        TimeAgo::reconfigure(new Config(lang: Lang::DE));
         $this->assertSame($expect, TimeAgo::trans($input));
     }
 
@@ -54,7 +54,7 @@ final class GermanTest extends TestCase
     #[DataProvider('providerForReturnsCorrectDateFrom0SecondsTo59Seconds')]
     public function testReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
-        TimeAgo::configure(new Config(lang: Lang::DE));
+        TimeAgo::reconfigure(new Config(lang: Lang::DE));
 
         $result = TimeAgo::trans("now - {$seconds} seconds");
         $this->assertContains($result, $expect);

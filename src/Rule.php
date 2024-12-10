@@ -12,7 +12,11 @@ final readonly class Rule
      */
     public bool $other;
 
+    /**
+     * @param Lang[] $langs
+     */
     public function __construct(
+        public array $langs,
         public bool $zero,
         public bool $one,
         public bool $two,

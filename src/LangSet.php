@@ -41,7 +41,7 @@ final class LangSet
     }
 
     /**
-     * @param array<int,LangOverwrite> $overwrites
+     * @param LangOverwrite[] $overwrites
      */
     public function applyOverwrites(array $overwrites): void
     {
@@ -54,6 +54,11 @@ final class LangSet
     {
         foreach (get_object_vars($overwrites) as $prop => $value) {
             if ($value && property_exists($this, $prop)) {
+                if ($value instanceof Lang) {
+                    $this->lang = $value->value;
+                    continue;
+                }
+
                 $this->$prop = $value;
             }
         }

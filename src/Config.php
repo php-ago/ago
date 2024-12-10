@@ -17,8 +17,8 @@ class Config
      * @param string|null $lang Language code ISO 639-1.
      * Default is English (en).
      *
-     * @param array<int,LangOverwrite>|null $overwrites Overrides will override
-     * default translations.
+     * @param array<int,LangOverwrite>|null $overwrites Overwrite default
+     * translations.
      */
     public function __construct(string|null $lang = null, array|null $overwrites = [])
     {

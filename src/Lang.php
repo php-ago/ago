@@ -13,8 +13,8 @@ final class Lang
     public const DE = 'de';
 
     /**
-     * @param array<int,LangOverwrite>|null $overwrites Overrides will override
-     * default translations.
+     * @param array<int,LangOverwrite>|null $overwrites Overwrite default
+     * translations.
      */
     public static function set(string $lang, array|null $overwrites = []): void
     {

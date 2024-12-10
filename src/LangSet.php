@@ -40,9 +40,19 @@ final class LangSet
         $this->year = new LangForm($translations['year']);
     }
 
-    public function applyCustomTranslations(LangSet $customLangSet): void
+    /**
+     * @param array<int,self> $overrides
+     */
+    public function applyOverrides(array $overrides): void
     {
-        foreach (get_object_vars($customLangSet) as $key => $value) {
+        foreach ($overrides as $langSet) {
+            $this->applyLangSet($langSet);
+        }
+    }
+
+    private function applyLangSet(self $langSet): void
+    {
+        foreach (get_object_vars($langSet) as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
             }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-final readonly class LangOverride
+final readonly class LangOverwrite
 {
     public function __construct(
         public string $lang,

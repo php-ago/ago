@@ -9,20 +9,20 @@ class Config
     public string $lang = Lang::EN;
 
     /**
-     * @var array<int,LangOverride>
+     * @var array<int,LangOverwrite>
      */
-    public array $overrides = [];
+    public array $overwrites = [];
 
     /**
      * @param string|null $lang Language code ISO 639-1.
      * Default is English (en).
      *
-     * @param array<int,LangOverride>|null $overrides Overrides will override
+     * @param array<int,LangOverwrite>|null $overwrites Overrides will override
      * default translations.
      */
-    public function __construct(string|null $lang = null, array|null $overrides = [])
+    public function __construct(string|null $lang = null, array|null $overwrites = [])
     {
         $this->lang = $lang ?? Lang::EN;
-        $this->overrides = $overrides ?? [];
+        $this->overwrites = $overwrites ?? [];
     }
 }

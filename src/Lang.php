@@ -13,11 +13,11 @@ final class Lang
     public const DE = 'de';
 
     /**
-     * @param array<int,LangOverride>|null $overrides Overrides will override
+     * @param array<int,LangOverwrite>|null $overwrites Overrides will override
      * default translations.
      */
-    public static function set(string $lang, array|null $overrides = []): void
+    public static function set(string $lang, array|null $overwrites = []): void
     {
-        TimeAgo::configure(new Config(lang: $lang, overrides: $overrides));
+        TimeAgo::configure(new Config(lang: $lang, overwrites: $overwrites));
     }
 }

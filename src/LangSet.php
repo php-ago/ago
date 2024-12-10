@@ -41,20 +41,20 @@ final class LangSet
     }
 
     /**
-     * @param array<int,self> $overrides
+     * @param array<int,LangOverwrite> $overwrites
      */
-    public function applyOverrides(array $overrides): void
+    public function applyOverwrites(array $overwrites): void
     {
-        foreach ($overrides as $langSet) {
+        foreach ($overwrites as $langSet) {
             $this->applyLangSet($langSet);
         }
     }
 
-    private function applyLangSet(self $langSet): void
+    private function applyLangSet(LangOverwrite $overwrites): void
     {
-        foreach (get_object_vars($langSet) as $key => $value) {
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
+        foreach (get_object_vars($overwrites) as $prop => $value) {
+            if ($value && property_exists($this, $prop)) {
+                $this->$prop = $value;
             }
         }
     }

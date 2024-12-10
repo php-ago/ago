@@ -89,8 +89,8 @@ final class TimeAgo
 
         $langSet = new LangSet($translations);
 
-        if ($this->config->overrides) {
-            $langSet->applyOverrides($this->config->overrides);
+        if ($this->config->overwrites) {
+            $langSet->applyOverwrites($this->config->overwrites);
         }
 
         if ($timeInSec < 60 && $this->isEnabled(Option::ONLINE)) {

@@ -21,7 +21,7 @@ final readonly class RuleLoader
         $path = "{$this->ruleDir}/rules.php";
 
         if (!file_exists($path)) {
-            throw new RuntimeException("File '{$path}' not found");
+            throw new RuntimeException("[Ago]: File '{$path}' not found");
         }
 
         $closure = require $path;

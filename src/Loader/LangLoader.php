@@ -24,7 +24,7 @@ final readonly class LangLoader
         $path = "{$this->langDir}/{$lang->value}.php";
 
         if (!file_exists($path)) {
-            throw new RuntimeException("Translation file not found for language: {$lang->value}");
+            throw new RuntimeException("[Ago]: Translation file not found for language: {$lang->value}");
         }
 
         return require $path;

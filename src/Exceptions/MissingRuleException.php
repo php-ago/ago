@@ -10,6 +10,6 @@ class MissingRuleException extends Exception
 {
     public function __construct(string $lang)
     {
-        parent::__construct("Missing rule for language: {$lang}");
+        parent::__construct("[Ago]: Missing rule for language: {$lang}");
     }
 }

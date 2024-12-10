@@ -261,7 +261,7 @@ final class TimeAgo
     private function validateOptions(): void
     {
         if ($this->isEnabled(Option::JUST_NOW) && $this->isEnabled(Option::ONLINE)) {
-            $msg = 'Option JUST_NOW and ONLINE are incompatible. Use only one of them';
+            $msg = '[Ago]: Option JUST_NOW and ONLINE are incompatible. Use only one of them';
             throw new InvalidOptionsException($msg);
         }
     }

@@ -6,6 +6,7 @@
     - ⚠️ The `Option` class is now an enum instead of a class
 - Improvements
     - 🧑‍💻 Codebase refactoring and cleanup
+    - 🧑‍💻 Remove `InvalidDateFormatException` exception that was thrown from `TimeAgo::trans()` in the version `3`
     - ✨ Added support for PHP 8.4
     - ✨ Added new option `Option::RESET_CONF` to reset the configuration to default values
 

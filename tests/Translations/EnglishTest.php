@@ -27,6 +27,18 @@ final class EnglishTest extends TestCase
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
+            ['1 minute', '1 minute'],
+            ['3 minutes', '3 minutes'],
+            ['1 hour', '1 hour'],
+            ['4 hours', '4 hours'],
+            ['1 day', '1 day'],
+            ['6 days', '6 days'],
+            ['1 week', '1 week'],
+            ['2 weeks', '2 weeks'],
+            ['1 month', '1 month'],
+            ['8 months', '8 months'],
+            ['1 year', '1 year'],
+            ['10 years', '10 years'],
             ['-60 seconds', '1 minute ago'],
             ['-1 minute', '1 minute ago'],
             ['-2 minutes', '2 minutes ago'],
@@ -48,6 +60,7 @@ final class EnglishTest extends TestCase
             ['-11 months', '11 months ago'],
             ['-12 months', '1 year ago'],
             ['-5 years', '5 years ago'],
+            ['-7 years', '7 years ago'],
             ['-21 years', '21 years ago'],
             ['-31 years', '31 years ago'],
             ['-41 years', '41 years ago'],
@@ -71,6 +84,10 @@ final class EnglishTest extends TestCase
             [0, ['0 seconds ago', '1 second ago']],
             [1, ['1 second ago', '2 seconds ago']],
             [2, ['2 seconds ago', '3 seconds ago']],
+            [4, ['4 seconds ago', '5 seconds ago']],
+            [6, ['6 seconds ago', '7 seconds ago']],
+            [8, ['8 seconds ago', '8 seconds ago']],
+            [10, ['10 seconds ago', '11 seconds ago']],
             [30, ['30 seconds ago', '31 seconds ago']],
             [58, ['58 seconds ago', '59 seconds ago']],
         ];

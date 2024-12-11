@@ -11,13 +11,13 @@ This package is well tested, optimized and already used in many production apps.
 ### Follow the [official documentation](https://php-ago.github.io/) for more information
 
 ## Supported languages
-| Flag | Language         | ISO 639-1 |
-| ---- | ---------------- | --------- |
-| 🇬🇧   | English          | `en`      |
-| 🇷🇺   | Russian          | `ru`      |
-| 🇺🇦   | Ukrainian        | `uk`      |
-| 🇳🇱   | Dutch            | `nl`      |
-| 🇩🇪   | German           | `de`      |
+| Flag | Language              | ISO 639-1 |
+| ---- | --------------------- | --------- |
+| 🇬🇧   | English               | `en`      |
+| 🇷🇺   | Russian               | `ru`      |
+| 🇺🇦   | Ukrainian             | `uk`      |
+| 🇳🇱   | Dutch                 | `nl`      |
+| 🇩🇪   | German                | `de`      |
 
 ## 🚀 Quick Start
 

@@ -44,7 +44,8 @@
             "@cs",
             "@stan",
             "@test",
-            "@pint"
+            "@pint",
+            "echo \"\\033[32mEverything works! Thank you!\\033[0m\""
         ]
     },
     "support": {

@@ -10,7 +10,7 @@ This package is well tested, optimized and already used in many production apps.
 
 ### Follow the [official documentation](https://php-ago.github.io/) for more information
 
-## Supported languages
+## Supported Languages
 | Flag | Language              | ISO 639-1 |
 | ---- | --------------------- | --------- |
 | 🇬🇧   | English               | `en`      |

@@ -231,7 +231,7 @@ final class TimeAgo
         $lang = $this->config->lang;
 
         foreach ($rules as $languages => $rule) {
-            if (str_contains($lang, $languages)) {
+            if (str_contains($languages, $lang)) {
                 return $rule;
             }
         }

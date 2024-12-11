@@ -6,11 +6,11 @@ namespace Serhii\Ago;
 
 final class Lang
 {
-    public const EN = 'en';
-    public const RU = 'ru';
-    public const UK = 'uk';
-    public const NL = 'nl';
-    public const DE = 'de';
+    public const EN = 'en'; // English
+    public const RU = 'ru'; // Russian
+    public const UK = 'uk'; // Ukrainian
+    public const NL = 'nl'; // Dutch
+    public const DE = 'de'; // German
 
     /**
      * @see https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes

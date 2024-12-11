@@ -6,6 +6,7 @@ namespace Serhii\Ago;
 
 use DateTimeInterface;
 use InvalidArgumentException;
+use RuntimeException;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
 use Serhii\Ago\Exceptions\MissingRuleException;
 use Serhii\Ago\Loader\LangLoader;
@@ -22,12 +23,14 @@ final class TimeAgo
     private Config $config;
     private LangLoader $langLoader;
     private RuleLoader $ruleLoader;
+    private TimeDecomposer $timeUtil;
 
     private function __construct()
     {
         $this->config = new Config();
         $this->langLoader = new LangLoader(__DIR__ . '/../resources/lang');
         $this->ruleLoader = new RuleLoader(__DIR__ . '/../resources');
+        $this->timeUtil = new TimeDecomposer();
     }
 
     public static function singleton(): self
@@ -41,6 +44,7 @@ final class TimeAgo
      * @throws MissingRuleException
      * @throws InvalidOptionsException
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     public static function trans(int|string|DateTimeInterface $date, Option ...$options): string
     {
@@ -71,6 +75,7 @@ final class TimeAgo
      * @throws MissingRuleException
      * @throws InvalidOptionsException
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     private function transInternal(int|string|DateTimeInterface $date, array $options): string
     {
@@ -92,6 +97,7 @@ final class TimeAgo
      *
      * @throws MissingRuleException
      * @throws InvalidOptionsException
+     * @throws RuntimeException
      */
     private function handle(int $dateTime, array $options): string
     {
@@ -169,10 +175,12 @@ final class TimeAgo
 
     /**
      * @return array{LangForm,int}
+     *
+     * @throws RuntimeException
      */
     private function findLangForm(LangSet $langSet, int $timeInSec): array
     {
-        $timeNum = $this->calculateTimeNum($timeInSec);
+        $timeNum = $this->timeUtil->calculateTimeNum($timeInSec);
 
         switch (true) {
             case $timeInSec < 60:
@@ -239,19 +247,6 @@ final class TimeAgo
         }
 
         throw new MissingRuleException($lang);
-    }
-
-    private function calculateTimeNum(int $timeInSec): TimeNumber
-    {
-        return new TimeNumber(
-            seconds: $timeInSec,
-            minutes: (int) floor($timeInSec / 60),
-            hours: (int) floor($timeInSec / 3600),
-            days: (int) floor($timeInSec / 86400),
-            weeks: (int) floor($timeInSec / 604800),
-            months: (int) floor($timeInSec / 2629440),
-            years: (int) floor($timeInSec / 31553280),
-        );
     }
 
     private function isEnabled(Option $option): bool

@@ -16,7 +16,7 @@ final class TimeAgo
     private static ?self $instance = null;
 
     /**
-     * @var array<int,Option>
+     * @var Option[]
      */
     private array $options;
     private Config $config;
@@ -88,7 +88,7 @@ final class TimeAgo
     }
 
     /**
-     * @param array<int,Option> $options
+     * @param Option[] $options
      *
      * @throws MissingRuleException
      * @throws InvalidOptionsException
@@ -121,7 +121,7 @@ final class TimeAgo
     }
 
     /**
-     * @param array<int,Option> $options
+     * @param Option[] $options
      *
      * @throws InvalidOptionsException
      */
@@ -202,7 +202,9 @@ final class TimeAgo
     private function computeTimeUnit(LangForm $langForm, int $timeNum): string
     {
         $form = $this->timeUnitForm($timeNum);
-        return $langForm->{$form} ?? $langForm->other;
+        $matchedForm = $langForm->{$form};
+
+        return is_string($matchedForm) ? $matchedForm : $langForm->other;
     }
 
     /**

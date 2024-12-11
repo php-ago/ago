@@ -26,6 +26,11 @@ final readonly class RuleLoader
 
         $closure = require $path;
 
+        if (!is_callable($closure)) {
+            throw new RuntimeException("[Ago]: File '{$path}' must return a closure");
+        }
+
+        /** @var array<string,Rule> */
         return $closure($timeNum);
     }
 }

@@ -25,6 +25,12 @@ final readonly class LangLoader
             throw new RuntimeException("[Ago]: Translation file not found for language: {$lang}");
         }
 
-        return require $path;
+        $langSet = require $path;
+
+        if (!$langSet instanceof LangSet) {
+            throw new RuntimeException("[Ago]: File '{$path}' must return an instance of LangSet");
+        }
+
+        return $langSet;
     }
 }

@@ -91,13 +91,47 @@ final class TimeAgoTest extends TestCase
     public static function providerForOverrides(): array
     {
         return [
-            ['now - 2 days', '2d', Lang::EN, [
-                new LangOverwrite(
-                    lang: Lang::EN,
-                    format: '{num}{timeUnit}',
-                    day: new LangForm(other: 'd', one: 'd'),
-                ),
-            ]],
+            [
+                'now - 2 days',
+                '2d',
+                Lang::EN,
+                [
+                    new LangOverwrite(
+                        lang: Lang::EN,
+                        format: '{num}{timeUnit}',
+                        day: new LangForm(other: 'd', one: 'd'),
+                    ),
+                ],
+            ],
+            [
+                'now - 4 months',
+                '4 мес. назад',
+                Lang::RU,
+                [
+                    new LangOverwrite(
+                        lang: Lang::RU,
+                        month: new LangForm(other: 'мес.', one: 'мес.', few: 'мес.'),
+                    ),
+                ],
+            ],
+            [
+                'now - 2 days',
+                '2 - д',
+                Lang::RU,
+                [
+                    new LangOverwrite(lang: Lang::RU, format: '{num} - {timeUnit}'),
+                    new LangOverwrite(lang: Lang::RU, day: new LangForm(other: 'д', one: 'д')),
+                ],
+            ],
+            [
+                'now - 4 days',
+                '4 days ago',
+                Lang::EN,
+                [
+                    new LangOverwrite(lang: Lang::RU, format: '{num} - {timeUnit}'),
+                    new LangOverwrite(lang: Lang::RU, day: new LangForm(other: 'д', one: 'д')),
+                ],
+            ],
         ];
     }
 

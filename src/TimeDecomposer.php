@@ -51,10 +51,10 @@ final class TimeDecomposer
     private function calculateTimeNumForMonth(int $timeInSec): int
     {
         return match ($this->lastDayOfMonth()) {
-            31 => (int) floor($timeInSec / self::MONTH_31),
-            30 => (int) floor($timeInSec / self::MONTH_30),
-            29 => (int) floor($timeInSec / self::MONTH_29),
-            28 => (int) floor($timeInSec / self::MONTH_28),
+            31 => (int) round($timeInSec / self::MONTH_31),
+            30 => (int) round($timeInSec / self::MONTH_30),
+            29 => (int) round($timeInSec / self::MONTH_29),
+            28 => (int) round($timeInSec / self::MONTH_28),
             default => throw new RuntimeException('[Ago]: Invalid number of days in month'),
         };
     }
@@ -65,8 +65,8 @@ final class TimeDecomposer
     private function calculateTimeNumForYear(int $timeInSec): int
     {
         return match ($this->lastDayOfYear()) {
-            366 => (int) floor($timeInSec / self::YEAR_366),
-            365 => (int) floor($timeInSec / self::YEAR_365),
+            366 => (int) round($timeInSec / self::YEAR_366),
+            365 => (int) round($timeInSec / self::YEAR_365),
             default => throw new RuntimeException('[Ago]: Invalid number of days in year'),
         };
     }

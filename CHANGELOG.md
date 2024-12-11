@@ -12,6 +12,7 @@
     - ✨ Added support for PHP 8.4
     - ✨ Added new option `Option::RESET_CONF` to reset the configuration to default values
     - 🧑‍💻 Added `configure` and `reconfigure` methods to the `TimeAgo` class, you can read about them in the [documentation](https://php-ago.github.io/v4/configurations#configuration-options)
+    - 🧑‍💻 Improve time calculation including leap years
 
 ## [Release Notes v3](.github/CHANGELOG_V3.md)
 ## [Release Notes v2](.github/CHANGELOG_V2.md)

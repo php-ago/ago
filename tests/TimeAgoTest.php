@@ -69,14 +69,7 @@ final class TimeAgoTest extends TestCase
     #[DataProvider('providerForDateEdges')]
     public function testDateEdges(string $input, string $expect): void
     {
-        $fullMonths = ['1', '3', '5', '7', '8', '10', '12'];
-        $currMonth = date('n');
-
-        if (!in_array($currMonth, $fullMonths, strict: true)) {
-            $this->markTestSkipped("Current month doesn't have 31 days. Test skipped");
-        }
-
-        $this->assertSame($expect, TimeAgo::trans($input, Option::RESET_CONF));
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
     public static function providerForDateEdges(): array
@@ -84,6 +77,7 @@ final class TimeAgoTest extends TestCase
         return [
             ['-31 days', '1 month ago'],
             ['yesterday', '1 day ago'],
+            ['1 year', '1 year'],
         ];
     }
 

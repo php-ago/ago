@@ -22,32 +22,32 @@ final class EnglishTest extends TestCase
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['now - 60 seconds', '1 minute ago'],
-            ['now - 1 minute', '1 minute ago'],
-            ['now - 2 minutes', '2 minutes ago'],
-            ['now - 3 minutes', '3 minutes ago'],
-            ['now - 4 minutes', '4 minutes ago'],
-            ['now - 5 minutes', '5 minutes ago'],
-            ['now - 11 minutes', '11 minutes ago'],
-            ['now - 59 minutes', '59 minutes ago'],
-            ['now - 60 minutes', '1 hour ago'],
-            ['now - 1 hour', '1 hour ago'],
-            ['now - 4 hours', '4 hours ago'],
-            ['now - 13 hours', '13 hours ago'],
-            ['now - 24 hours', '1 day ago'],
-            ['now - 2 days', '2 days ago'],
-            ['now - 7 days', '1 week ago'],
-            ['now - 2 weeks', '2 weeks ago'],
-            ['now - 1 month', '1 month ago'],
-            ['now - 2 months', '2 months ago'],
-            ['now - 11 months', '11 months ago'],
-            ['now - 12 months', '1 year ago'],
-            ['now - 5 years', '5 years ago'],
-            ['now - 21 years', '21 years ago'],
-            ['now - 31 years', '31 years ago'],
-            ['now - 41 years', '41 years ago'],
-            ['now - 100 years', '100 years ago'],
-            ['now - 101 years', '101 years ago'],
+            ['-60 seconds', '1 minute ago'],
+            ['-1 minute', '1 minute ago'],
+            ['-2 minutes', '2 minutes ago'],
+            ['-3 minutes', '3 minutes ago'],
+            ['-4 minutes', '4 minutes ago'],
+            ['-5 minutes', '5 minutes ago'],
+            ['-11 minutes', '11 minutes ago'],
+            ['-59 minutes', '59 minutes ago'],
+            ['-60 minutes', '1 hour ago'],
+            ['-1 hour', '1 hour ago'],
+            ['-4 hours', '4 hours ago'],
+            ['-13 hours', '13 hours ago'],
+            ['-24 hours', '1 day ago'],
+            ['-2 days', '2 days ago'],
+            ['-7 days', '1 week ago'],
+            ['-2 weeks', '2 weeks ago'],
+            ['-1 month', '1 month ago'],
+            ['-2 months', '2 months ago'],
+            ['-11 months', '11 months ago'],
+            ['-12 months', '1 year ago'],
+            ['-5 years', '5 years ago'],
+            ['-21 years', '21 years ago'],
+            ['-31 years', '31 years ago'],
+            ['-41 years', '41 years ago'],
+            ['-100 years', '100 years ago'],
+            ['-101 years', '101 years ago'],
         ];
     }
 
@@ -56,7 +56,7 @@ final class EnglishTest extends TestCase
     {
         TimeAgo::reconfigure(new Config(lang: Lang::EN));
 
-        $result = TimeAgo::trans("now - {$seconds} seconds");
+        $result = TimeAgo::trans("-{$seconds} seconds");
         $this->assertContains($result, $expect);
     }
 

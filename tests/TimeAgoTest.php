@@ -15,48 +15,54 @@ use Serhii\Ago\TimeAgo;
 
 final class TimeAgoTest extends TestCase
 {
+    public function tearDown(): void
+    {
+        TimeAgo::reconfigure();
+        parent::tearDown();
+    }
+
     #[DataProvider('providerForReturnsCorrectTime')]
     public function testReturnsCorrectTime(mixed $date, string $expect, array $options, string $lang): void
     {
-        TimeAgo::reconfigure(new Config(lang: $lang));
+        Lang::set($lang);
         $this->assertSame($expect, TimeAgo::trans($date, ...$options));
     }
 
     public static function providerForReturnsCorrectTime(): array
     {
         return [
-            ['now - 40 seconds', 'Online', [Option::ONLINE], Lang::EN],
-            ['now - 40 seconds', 'Online', [Option::ONLINE], Lang::EN],
-            ['now - 33 seconds', 'Just now', [Option::JUST_NOW], Lang::EN],
-            ['now - 40 seconds', 'В сети', [Option::ONLINE], Lang::RU],
-            ['now - 33 seconds', 'Только что', [Option::JUST_NOW], Lang::RU],
-            ['now - 1 minutes', '1 minute ago', [], Lang::EN],
-            ['now - 2 minutes', '2 minutes ago', [], Lang::EN],
-            ['now - 3 minutes', '3 minutes', [Option::NO_SUFFIX], Lang::EN],
-            ['now - 1 minutes', '1 минута', [Option::NO_SUFFIX], Lang::RU],
-            ['now - 4 minutes', '4 minutes ago', [], Lang::EN],
-            ['now - 5 minutes', '5 minutes ago', [], Lang::EN],
-            ['now - 11 minutes', '11 minutes ago', [], Lang::EN],
-            ['now - 59 minutes', '59 minutes ago', [], Lang::EN],
-            ['now - 3 minutes', 'Vor 3 Minuten', [], Lang::DE],
-            ['now - 1 hours', '1 hour ago', [], Lang::EN],
-            ['now - 4 hours', '4 hours ago', [], Lang::EN],
-            ['now - 13 hours', '13 hours ago', [], Lang::EN],
-            ['now - 24 hours', '1 day ago', [], Lang::EN],
-            ['now - 2 days', '2 days ago', [], Lang::EN],
-            ['now - 7 days', '1 week ago', [], Lang::EN],
-            ['now - 2 weeks', '2 недели назад', [], Lang::RU],
-            ['now - 1 months', '1 month', [Option::NO_SUFFIX], Lang::EN],
-            ['now - 2 months', '2 months ago', [], Lang::EN],
-            ['now - 11 months', '11 months ago', [], Lang::EN],
-            ['now - 12 months', '1 year ago', [], Lang::EN],
-            ['now - 5 years', '5 years ago', [], Lang::EN],
-            ['now - 21 years', '21 years ago', [], Lang::EN],
-            ['now - 31 years', '31 years ago', [], Lang::EN],
-            ['now - 41 years', '41 years ago', [], Lang::EN],
-            ['now - 100 years', '100 years ago', [], Lang::EN],
-            ['now - 101 years', '101 years ago', [], Lang::EN],
-            ['now - 121 year', '121 jaar geleden', [], Lang::NL],
+            ['-40 seconds', 'Online', [Option::ONLINE], Lang::EN],
+            ['-40 seconds', 'Online', [Option::ONLINE], Lang::EN],
+            ['-33 seconds', 'Just now', [Option::JUST_NOW], Lang::EN],
+            ['-40 seconds', 'В сети', [Option::ONLINE], Lang::RU],
+            ['-33 seconds', 'Только что', [Option::JUST_NOW], Lang::RU],
+            ['-1 minutes', '1 minute ago', [], Lang::EN],
+            ['-2 minutes', '2 minutes ago', [], Lang::EN],
+            ['-3 minutes', '3 minutes', [Option::NO_SUFFIX], Lang::EN],
+            ['-1 minutes', '1 минута', [Option::NO_SUFFIX], Lang::RU],
+            ['-4 minutes', '4 minutes ago', [], Lang::EN],
+            ['-5 minutes', '5 minutes ago', [], Lang::EN],
+            ['11 minutes', '11 minutes', [], Lang::EN],
+            ['-59 minutes', '59 minutes ago', [], Lang::EN],
+            ['-3 minutes', 'Vor 3 Minuten', [], Lang::DE],
+            ['-1 hours', '1 hour ago', [], Lang::EN],
+            ['-4 hours', '4 hours ago', [], Lang::EN],
+            ['-13 hours', '13 hours ago', [], Lang::EN],
+            ['-24 hours', '1 day ago', [], Lang::EN],
+            ['-2 days', '2 days ago', [], Lang::EN],
+            ['-7 days', '1 week ago', [], Lang::EN],
+            ['-2 weeks', '2 недели назад', [], Lang::RU],
+            ['-1 months', '1 month', [Option::NO_SUFFIX], Lang::EN],
+            ['-2 months', '2 months ago', [], Lang::EN],
+            ['-11 months', '11 months ago', [], Lang::EN],
+            ['-12 months', '1 year ago', [], Lang::EN],
+            ['-5 years', '5 years ago', [], Lang::EN],
+            ['-21 years', '21 years ago', [], Lang::EN],
+            ['-31 years', '31 years ago', [], Lang::EN],
+            ['-41 years', '41 years ago', [], Lang::EN],
+            ['-100 years', '100 years ago', [], Lang::EN],
+            ['-101 years', '101 years ago', [], Lang::EN],
+            ['-121 year', '121 jaar geleden', [], Lang::NL],
         ];
     }
 
@@ -76,7 +82,7 @@ final class TimeAgoTest extends TestCase
     public static function providerForDateEdges(): array
     {
         return [
-            ['now - 31 days', '1 month ago'],
+            ['-31 days', '1 month ago'],
             ['yesterday', '1 day ago'],
         ];
     }
@@ -92,7 +98,7 @@ final class TimeAgoTest extends TestCase
     {
         return [
             [
-                'now - 2 days',
+                '-2 days',
                 '2d',
                 Lang::EN,
                 [
@@ -104,7 +110,7 @@ final class TimeAgoTest extends TestCase
                 ],
             ],
             [
-                'now - 4 months',
+                '-4 months',
                 '4 мес. назад',
                 Lang::RU,
                 [
@@ -115,7 +121,7 @@ final class TimeAgoTest extends TestCase
                 ],
             ],
             [
-                'now - 2 days',
+                '-2 days',
                 '2 - д',
                 Lang::RU,
                 [
@@ -124,7 +130,7 @@ final class TimeAgoTest extends TestCase
                 ],
             ],
             [
-                'now - 4 days',
+                '-4 days',
                 '4 days ago',
                 Lang::EN,
                 [
@@ -148,10 +154,22 @@ final class TimeAgoTest extends TestCase
             ],
         ));
 
-        $this->assertSame('1м', TimeAgo::trans('now - 1 minute'));
+        $this->assertSame('1м', TimeAgo::trans('-1 minute'));
 
         TimeAgo::configure(new Config(lang: Lang::EN));
 
-        $this->assertSame('1 minute ago', TimeAgo::trans('now - 1 minute'));
+        $this->assertSame('1 minute ago', TimeAgo::trans('-1 minute'));
+    }
+
+    public function testLanguageSwitchWithLangClass(): void
+    {
+        Lang::set(Lang::RU);
+        $this->assertSame('2 минуты', TimeAgo::trans('2 minutes'));
+
+        Lang::set(Lang::UK);
+        $this->assertSame('3 хвилини', TimeAgo::trans('3 minutes'));
+
+        Lang::set(Lang::EN);
+        $this->assertSame('5 minutes ago', TimeAgo::trans('-5 minutes'));
     }
 }

@@ -22,32 +22,32 @@ final class GermanTest extends TestCase
     public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['now - 60 seconds', 'Vor 1 Minute'],
-            ['now - 1 minute', 'Vor 1 Minute'],
-            ['now - 2 minutes', 'Vor 2 Minuten'],
-            ['now - 3 minutes', 'Vor 3 Minuten'],
-            ['now - 4 minutes', 'Vor 4 Minuten'],
-            ['now - 5 minutes', 'Vor 5 Minuten'],
-            ['now - 11 minutes', 'Vor 11 Minuten'],
-            ['now - 59 minutes', 'Vor 59 Minuten'],
-            ['now - 60 minutes', 'Vor 1 Stunde'],
-            ['now - 1 hour', 'Vor 1 Stunde'],
-            ['now - 4 hours', 'Vor 4 Stunden'],
-            ['now - 13 hours', 'Vor 13 Stunden'],
-            ['now - 24 hours', 'Vor 1 Tag'],
-            ['now - 2 days', 'Vor 2 Tagen'],
-            ['now - 7 days', 'Vor 1 Woche'],
-            ['now - 2 weeks', 'Vor 2 Wochen'],
-            ['now - 1 month', 'Vor 1 Monat'],
-            ['now - 2 months', 'Vor 2 Monaten'],
-            ['now - 11 months', 'Vor 11 Monaten'],
-            ['now - 12 months', 'Vor 1 Jahr'],
-            ['now - 5 years', 'Vor 5 Jahren'],
-            ['now - 21 years', 'Vor 21 Jahren'],
-            ['now - 31 years', 'Vor 31 Jahren'],
-            ['now - 41 years', 'Vor 41 Jahren'],
-            ['now - 100 years', 'Vor 100 Jahren'],
-            ['now - 101 years', 'Vor 101 Jahren'],
+            ['-60 seconds', 'Vor 1 Minute'],
+            ['-1 minute', 'Vor 1 Minute'],
+            ['-2 minutes', 'Vor 2 Minuten'],
+            ['-3 minutes', 'Vor 3 Minuten'],
+            ['-4 minutes', 'Vor 4 Minuten'],
+            ['-5 minutes', 'Vor 5 Minuten'],
+            ['-11 minutes', 'Vor 11 Minuten'],
+            ['-59 minutes', 'Vor 59 Minuten'],
+            ['-60 minutes', 'Vor 1 Stunde'],
+            ['-1 hour', 'Vor 1 Stunde'],
+            ['-4 hours', 'Vor 4 Stunden'],
+            ['-13 hours', 'Vor 13 Stunden'],
+            ['-24 hours', 'Vor 1 Tag'],
+            ['-2 days', 'Vor 2 Tagen'],
+            ['-7 days', 'Vor 1 Woche'],
+            ['-2 weeks', 'Vor 2 Wochen'],
+            ['-1 month', 'Vor 1 Monat'],
+            ['-2 months', 'Vor 2 Monaten'],
+            ['-11 months', 'Vor 11 Monaten'],
+            ['-12 months', 'Vor 1 Jahr'],
+            ['-5 years', 'Vor 5 Jahren'],
+            ['-21 years', 'Vor 21 Jahren'],
+            ['-31 years', 'Vor 31 Jahren'],
+            ['-41 years', 'Vor 41 Jahren'],
+            ['-100 years', 'Vor 100 Jahren'],
+            ['-101 years', 'Vor 101 Jahren'],
         ];
     }
 
@@ -56,7 +56,7 @@ final class GermanTest extends TestCase
     {
         TimeAgo::reconfigure(new Config(lang: Lang::DE));
 
-        $result = TimeAgo::trans("now - {$seconds} seconds");
+        $result = TimeAgo::trans("-{$seconds} seconds");
         $this->assertContains($result, $expect);
     }
 

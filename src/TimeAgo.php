@@ -223,11 +223,11 @@ final class TimeAgo
         $rule = $this->identifyGrammarRules($timeNum);
 
         return match (true) {
-            $rule->zero ?? false => 'zero',
-            $rule->one ?? false => 'one',
-            $rule->few ?? false => 'few',
-            $rule->two ?? false => 'two',
-            $rule->many ?? false => 'many',
+            $rule->zero => 'zero',
+            $rule->one => 'one',
+            $rule->few => 'few',
+            $rule->two => 'two',
+            $rule->many => 'many',
             default => 'other',
         };
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Serhii\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 use Serhii\Ago\Config;
 use Serhii\Ago\Lang;
 use Serhii\Ago\LangForm;

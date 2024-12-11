@@ -5,18 +5,12 @@ declare(strict_types=1);
 namespace Serhii\Tests\Translations;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-use Serhii\Ago\Lang as Lang;
+use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
+use Serhii\Tests\TestCase;
 
 final class DutchTest extends TestCase
 {
-    public function tearDown(): void
-    {
-        TimeAgo::reconfigure();
-        parent::tearDown();
-    }
-
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {

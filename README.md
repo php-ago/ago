@@ -19,12 +19,10 @@ This package is well tested, optimized and already used in many production apps.
 | 🇳🇱   | Dutch                 | `nl`      |
 | 🇩🇪   | German                | `de`      |
 
-## 🚀 Quick Start
-
+## Quick Start
 ```bash
 composer require serhii/ago
 ```
 
 ## License
-
 The Ago project is licensed under the [MIT License](https://github.com/php-ago/ago/blob/main/LICENSE)

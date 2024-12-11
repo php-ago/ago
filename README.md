@@ -18,6 +18,7 @@ This package is well tested, optimized and already used in many production apps.
 | 🇺🇦   | Ukrainian             | `uk`      |
 | 🇳🇱   | Dutch                 | `nl`      |
 | 🇩🇪   | German                | `de`      |
+| 🇨🇳   | Chinese Simplified    | `zh`      |
 
 ## Quick Start
 ```bash

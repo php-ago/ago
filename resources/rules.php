@@ -25,5 +25,6 @@ return static function (int $num): array {
             few: ($end === 2 || $end === 3 || $end === 4) && ($num < 10 || $num > 20),
             many: ($num >= 5 && $num <= 20) || $end === 0 || $end >= 5,
         ),
+        'zh' => new Rule(),
     ];
 };

@@ -11,6 +11,7 @@ final class Lang
     public const UK = 'uk'; // Ukrainian
     public const NL = 'nl'; // Dutch
     public const DE = 'de'; // German
+    public const ZH = 'zh'; // Chinese
 
     /**
      * @see https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes

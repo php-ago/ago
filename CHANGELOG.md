@@ -1,7 +1,7 @@
 # Release Notes
 
 ## v4.0.0 (2024-12-11)
-> 🚀 [Upgrade Guide from v3 to v4](https://php-ago.github.io/v4/upgrade.html)
+> 🚀 [Upgrade Guide from v3 to v4](https://php-ago.github.io/v4/upgrade)
 - Breaking changes
     - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`
     - ⚠️ The `Option` class is now an enum type

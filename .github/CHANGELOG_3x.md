@@ -1,4 +1,6 @@
-# Release Notes v2
+# Release Notes 3.x
+
+[Documentation for version 3.x](https://php-ago.github.io/3.x/)
 
 ## v3.2.6 (2024-11-01)
 - Moved repo to a new organization `php-ago/ago`

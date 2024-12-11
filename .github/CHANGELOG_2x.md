@@ -1,4 +1,4 @@
-# Release Notes v2
+# Release Notes 2.x
 
 ## v2.3.1 (2022-01-27)
 - Added more information to `CONTRIBUTE.md` file

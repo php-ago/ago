@@ -6,16 +6,21 @@ namespace Serhii\Tests\Translations;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Serhii\Ago\Config;
 use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
 
 final class UkrainianTest extends TestCase
 {
+    public function tearDown(): void
+    {
+        TimeAgo::reconfigure();
+        parent::tearDown();
+    }
+
     #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
     public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $output): void
     {
-        TimeAgo::reconfigure(new Config(lang: Lang::UK));
+        Lang::set(Lang::UK);
         $this->assertSame($output, TimeAgo::trans($input));
     }
 
@@ -84,8 +89,7 @@ final class UkrainianTest extends TestCase
     #[DataProvider('providerForReturnsCorrectDateFrom0SecondsTo59Seconds')]
     public function testReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
-        TimeAgo::reconfigure(new Config(lang: Lang::UK));
-
+        Lang::set(Lang::UK);
         $result = TimeAgo::trans("-{$seconds} seconds");
         $this->assertContains($result, $expect);
     }

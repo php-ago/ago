@@ -98,9 +98,7 @@ final class TimeAgo
         $this->handleOptions($options);
 
         $timeInSec = $this->computeTimeDifference($dateTime);
-        $translations = $this->langLoader->load($this->config->lang);
-
-        $langSet = new LangSet($translations);
+        $langSet = $this->langLoader->load($this->config->lang);
 
         if (!empty($this->config->overwrites)) {
             $langSet->applyOverwrites($this->config);

@@ -2,39 +2,20 @@
 
 declare(strict_types=1);
 
-return [
-    "lang" => "nl",
-    "format" => "{num} {timeUnit} {ago}",
-    "ago" => "geleden",
-    "online" => "Online",
-    "justnow" => "Net nu",
+use Serhii\Ago\LangForm;
+use Serhii\Ago\LangSet;
 
-    "second" => [
-        "one" => "seconde",
-        "other" => "seconden",
-    ],
-    "minute" => [
-        "one" => "minuut",
-        "other" => "minuten",
-    ],
-    "hour" => [
-        "one" => "uur",
-        "other" => "uur",
-    ],
-    "day" => [
-        "one" => "dag",
-        "other" => "dagen",
-    ],
-    "week" => [
-        "one" => "week",
-        "other" => "weken",
-    ],
-    "month" => [
-        "one" => "maand",
-        "other" => "maanden",
-    ],
-    "year" => [
-        "one" => "jaar",
-        "other" => "jaar",
-    ],
-];
+return new LangSet(
+    lang: "nl",
+    format: "{num} {timeUnit} {ago}",
+    ago: "geleden",
+    online: "Online",
+    justNow: "Net nu",
+    second: new LangForm(one: "seconde", other: "seconden"),
+    minute: new LangForm(one: "minuut", other: "minuten"),
+    hour: new LangForm(one: "uur", other: "uur"),
+    day: new LangForm(one: "dag", other: "dagen"),
+    week: new LangForm(one: "week", other: "weken"),
+    month: new LangForm(one: "maand", other: "maanden"),
+    year: new LangForm(one: "jaar", other: "jaar"),
+);

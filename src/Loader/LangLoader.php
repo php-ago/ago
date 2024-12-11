@@ -6,6 +6,7 @@ namespace Serhii\Ago\Loader;
 
 use RuntimeException;
 use Serhii\Ago\Lang;
+use Serhii\Ago\LangSet;
 
 final readonly class LangLoader
 {
@@ -16,10 +17,8 @@ final readonly class LangLoader
     /**
      * Loads translations for the given language from the
      * language directory.
-     *
-     * @return array<string,string|array<string,string>>
      */
-    public function load(Lang $lang): array
+    public function load(Lang $lang): LangSet
     {
         $path = "{$this->langDir}/{$lang->value}.php";
 

@@ -2,46 +2,20 @@
 
 declare(strict_types=1);
 
-return [
-    "lang" => "ru",
-    "format" => "{num} {timeUnit} {ago}",
-    "ago" => "назад",
-    "online" => "В сети",
-    "justnow" => "Только что",
+use Serhii\Ago\LangForm;
+use Serhii\Ago\LangSet;
 
-    "second" => [
-        "one" => "секунда",
-        "few" => "секунды",
-        "other" => "секунд",
-    ],
-    "minute" => [
-        "one" => "минута",
-        "few" => "минуты",
-        "other" => "минут",
-    ],
-    "hour" => [
-        "one" => "час",
-        "few" => "часа",
-        "other" => "часов",
-    ],
-    "day" => [
-        "one" => "день",
-        "few" => "дня",
-        "other" => "дней",
-    ],
-    "week" => [
-        "one" => "неделя",
-        "few" => "недели",
-        "other" => "недель",
-    ],
-    "month" => [
-        "one" => "месяц",
-        "few" => "месяца",
-        "other" => "месяцев",
-    ],
-    "year" => [
-        "one" => "год",
-        "few" => "года",
-        "other" => "лет",
-    ],
-];
+return new LangSet(
+    lang: "ru",
+    format: "{num} {timeUnit} {ago}",
+    ago: "назад",
+    online: "В сети",
+    justNow: "Только что",
+    second: new LangForm(one: "секунда", few: "секунды", other: "секунд"),
+    minute: new LangForm(one: "минута", few: "минуты", other: "минут"),
+    hour: new LangForm(one: "час", few: "часа", other: "часов"),
+    day: new LangForm(one: "день", few: "дня", other: "дней"),
+    week: new LangForm(one: "неделя", few: "недели", other: "недель"),
+    month: new LangForm(one: "месяц", few: "месяца", other: "месяцев"),
+    year: new LangForm(one: "год", few: "года", other: "лет"),
+);

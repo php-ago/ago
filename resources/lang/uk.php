@@ -2,31 +2,21 @@
 
 declare(strict_types=1);
 
-return [
+use Serhii\Ago\Lang;
+use Serhii\Ago\LangForm;
+use Serhii\Ago\LangSet;
 
-    'ago' => 'назад',
-    'just_now' => 'Щойно',
-    'online' => 'В мережі',
-    'second' => 'секунда',
-    'seconds' => 'секунди',
-    'seconds-special' => 'секунд',
-    'minute' => 'хвилина',
-    'minutes' => 'хвилини',
-    'minutes-special' => 'хвилин',
-    'hour' => 'година',
-    'hours' => 'години',
-    'hours-special' => 'годин',
-    'day' => 'день',
-    'days' => 'дня',
-    'days-special' => 'днів',
-    'week' => 'тиждень',
-    'weeks' => 'тижні',
-    'weeks-special' => 'тижнів',
-    'month' => 'місяць',
-    'months' => 'місяці',
-    'months-special' => 'місяців',
-    'year' => 'рік',
-    'years' => 'року',
-    'years-special' => 'років',
-
-];
+return new LangSet(
+    lang: Lang::UK,
+    format: '{num} {timeUnit} {ago}',
+    ago: 'тому',
+    online: 'В мережі',
+    justNow: 'Щойно',
+    second: new LangForm(other: 'секунд', one: 'секунда', few: 'секунди'),
+    minute: new LangForm(other: 'хвилин', one: 'хвилина', few: 'хвилини'),
+    hour: new LangForm(other: 'годин', one: 'година', few: 'години'),
+    day: new LangForm(other: 'дні', one: 'день', few: 'дні', many: 'днів'),
+    week: new LangForm(other: 'тижнів', one: 'тиждень', few: 'тижні'),
+    month: new LangForm(other: 'місяців', one: 'місяць', few: 'місяці'),
+    year: new LangForm(other: 'років', one: 'рік', few: 'роки'),
+);

@@ -2,24 +2,21 @@
 
 declare(strict_types=1);
 
-return [
+use Serhii\Ago\Lang;
+use Serhii\Ago\LangForm;
+use Serhii\Ago\LangSet;
 
-    'ago' => 'ago',
-    'just_now' => 'Just now',
-    'online' => 'Online',
-    'second' => 'second',
-    'seconds' => 'seconds',
-    'minute' => 'minute',
-    'minutes' => 'minutes',
-    'hour' => 'hour',
-    'hours' => 'hours',
-    'day' => 'day',
-    'days' => 'days',
-    'week' => 'week',
-    'weeks' => 'weeks',
-    'month' => 'month',
-    'months' => 'months',
-    'year' => 'year',
-    'years' => 'years',
-
-];
+return new LangSet(
+    lang: Lang::EN,
+    format: '{num} {timeUnit} {ago}',
+    ago: 'ago',
+    online: 'Online',
+    justNow: 'Just now',
+    second: new LangForm(other: 'seconds', one: 'second'),
+    minute: new LangForm(other: 'minutes', one: 'minute'),
+    hour: new LangForm(other: 'hours', one: 'hour'),
+    day: new LangForm(other: 'days', one: 'day'),
+    week: new LangForm(other: 'weeks', one: 'week'),
+    month: new LangForm(other: 'months', one: 'month'),
+    year: new LangForm(other: 'years', one: 'year'),
+);

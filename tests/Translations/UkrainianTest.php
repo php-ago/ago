@@ -4,140 +4,118 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
-use Exception;
+use Serhii\Tests\TestCase;
 
-class UkrainianTest extends TestCase
+final class UkrainianTest extends TestCase
 {
-    private $language = 'uk';
-
-    /**
-     * @dataProvider providerForReturnsCorrectTimeFromOneMinuteAndAbove
-     *
-     *
-     * @param string $method
-     * @param int $time
-     * @param string $output_expected
-     *
-     * @throws Exception
-     */
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $output_expected): void
+    #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $output): void
     {
-        Lang::set($this->language);
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($output_expected, TimeAgo::trans($date));
+        Lang::set(Lang::UK);
+        $this->assertSame($output, TimeAgo::trans($input));
     }
 
-    public function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
+    public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subSeconds', 60, '1 хвилина назад'],
-            ['subMinutes', 1, '1 хвилина назад'],
-            ['subMinutes', 2, '2 хвилини назад'],
-            ['subMinutes', 3, '3 хвилини назад'],
-            ['subMinutes', 4, '4 хвилини назад'],
-            ['subMinutes', 5, '5 хвилин назад'],
-            ['subMinutes', 6, '6 хвилин назад'],
-            ['subMinutes', 7, '7 хвилин назад'],
-            ['subMinutes', 8, '8 хвилин назад'],
-            ['subMinutes', 9, '9 хвилин назад'],
-            ['subMinutes', 10, '10 хвилин назад'],
-            ['subMinutes', 11, '11 хвилин назад'],
-            ['subMinutes', 12, '12 хвилин назад'],
-            ['subMinutes', 13, '13 хвилин назад'],
-            ['subMinutes', 59, '59 хвилин назад'],
-            ['subMinutes', 60, '1 година назад'],
-            ['subHours', 1, '1 година назад'],
-            ['subHours', 2, '2 години назад'],
-            ['subHours', 3, '3 години назад'],
-            ['subHours', 4, '4 години назад'],
-            ['subHours', 5, '5 годин назад'],
-            ['subHours', 6, '6 годин назад'],
-            ['subHours', 7, '7 годин назад'],
-            ['subHours', 8, '8 годин назад'],
-            ['subHours', 9, '9 годин назад'],
-            ['subHours', 10, '10 годин назад'],
-            ['subHours', 11, '11 годин назад'],
-            ['subHours', 12, '12 годин назад'],
-            ['subHours', 13, '13 годин назад'],
-            ['subHours', 14, '14 годин назад'],
-            ['subHours', 15, '15 годин назад'],
-            ['subHours', 16, '16 годин назад'],
-            ['subHours', 17, '17 годин назад'],
-            ['subHours', 18, '18 годин назад'],
-            ['subHours', 19, '19 годин назад'],
-            ['subHours', 20, '20 годин назад'],
-            ['subHours', 21, '21 година назад'],
-            ['subHours', 22, '22 години назад'],
-            ['subHours', 23, '23 години назад'],
-            ['subHours', 24, '1 день назад'],
-            ['subDays', 5, '5 днів назад'],
-            ['subDays', 2, '2 дня назад'],
-            ['subDays', 7, '1 тиждень назад'],
-            ['subWeeks', 2, '2 тижні назад'],
-            ['subMonths', 1, '1 місяць назад'],
-            ['subMonths', 2, '2 місяці назад'],
-            ['subMonths', 11, '11 місяців назад'],
-            ['subMonths', 12, '1 рік назад'],
-            ['subYears', 5, '5 років назад'],
-            ['subYears', 21, '21 рік назад'],
-            ['subYears', 30, '30 років назад'],
-            ['subYears', 31, '31 рік назад'],
-            ['subYears', 41, '41 рік назад'],
-            ['subYears', 100, '100 років назад'],
-            ['subYears', 101, '101 рік назад'],
+            ['-60 seconds', '1 хвилина тому'],
+            ['-1 minutes', '1 хвилина тому'],
+            ['-2 minutes', '2 хвилини тому'],
+            ['-3 minutes', '3 хвилини тому'],
+            ['-4 minutes', '4 хвилини тому'],
+            ['-5 minutes', '5 хвилин тому'],
+            ['-6 minutes', '6 хвилин тому'],
+            ['-7 minutes', '7 хвилин тому'],
+            ['-8 minutes', '8 хвилин тому'],
+            ['-9 minutes', '9 хвилин тому'],
+            ['-10 minutes', '10 хвилин тому'],
+            ['-11 minutes', '11 хвилин тому'],
+            ['-12 minutes', '12 хвилин тому'],
+            ['-13 minutes', '13 хвилин тому'],
+            ['-59 minutes', '59 хвилин тому'],
+            ['-60 minutes', '1 година тому'],
+            ['-1 hours', '1 година тому'],
+            ['-2 hours', '2 години тому'],
+            ['-3 hours', '3 години тому'],
+            ['-4 hours', '4 години тому'],
+            ['-5 hours', '5 годин тому'],
+            ['-6 hours', '6 годин тому'],
+            ['-7 hours', '7 годин тому'],
+            ['-8 hours', '8 годин тому'],
+            ['-9 hours', '9 годин тому'],
+            ['-10 hours', '10 годин тому'],
+            ['-11 hours', '11 годин тому'],
+            ['-12 hours', '12 годин тому'],
+            ['-13 hours', '13 годин тому'],
+            ['-14 hours', '14 годин тому'],
+            ['-15 hours', '15 годин тому'],
+            ['-16 hours', '16 годин тому'],
+            ['-17 hours', '17 годин тому'],
+            ['-18 hours', '18 годин тому'],
+            ['-19 hours', '19 годин тому'],
+            ['-20 hours', '20 годин тому'],
+            ['-21 hours', '21 година тому'],
+            ['-22 hours', '22 години тому'],
+            ['-23 hours', '23 години тому'],
+            ['-24 hours', '1 день тому'],
+            ['-5 days', '5 днів тому'],
+            ['-2 days', '2 дні тому'],
+            ['-7 days', '1 тиждень тому'],
+            ['-2 weeks', '2 тижні тому'],
+            ['-1 months', '1 місяць тому'],
+            ['-2 months', '2 місяці тому'],
+            ['-11 months', '11 місяців тому'],
+            ['-12 months', '1 рік тому'],
+            ['-5 years', '5 років тому'],
+            ['-21 years', '21 рік тому'],
+            ['-30 years', '30 років тому'],
+            ['-31 years', '31 рік тому'],
+            ['-41 years', '41 рік тому'],
+            ['-100 years', '100 років тому'],
+            ['-101 years', '101 рік тому'],
         ];
     }
 
-    /**
-     * @dataProvider providerForReturnsCorrectDateFrom0SecondsTo59Seconds
-     *
-     *
-     * @param int $seconds
-     * @param array $expect
-     *
-     * @throws Exception
-     */
+
+    #[DataProvider('providerForReturnsCorrectDateFrom0SecondsTo59Seconds')]
     public function testReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
-        Lang::set($this->language);
-
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $message = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
-        $this->assertContains($res, $expect, $message);
+        Lang::set(Lang::UK);
+        $result = TimeAgo::trans("-{$seconds} seconds");
+        $this->assertContains($result, $expect);
     }
 
-    public function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
+    public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
     {
         return [
-            [0, ['0 секунд назад', '1 секунда назад']],
-            [1, ['1 секунда назад', '2 секунди назад']],
-            [2, ['2 секунди назад', '3 секунди назад']],
-            [3, ['3 секунди назад', '4 секунди назад']],
-            [4, ['4 секунди назад', '5 секунд назад']],
-            [5, ['5 секунд назад', '6 секунд назад']],
-            [6, ['6 секунд назад', '7 секунд назад']],
-            [7, ['7 секунд назад', '8 секунд назад']],
-            [8, ['8 секунд назад', '9 секунд назад']],
-            [9, ['9 секунд назад', '10 секунд назад']],
-            [10, ['10 секунд назад', '11 секунд назад']],
-            [11, ['11 секунд назад', '12 секунд назад']],
-            [12, ['12 секунд назад', '13 секунд назад']],
-            [13, ['13 секунд назад', '14 секунд назад']],
-            [14, ['14 секунд назад', '15 секунд назад']],
-            [15, ['15 секунд назад', '16 секунд назад']],
-            [16, ['16 секунд назад', '17 секунд назад']],
-            [17, ['17 секунд назад', '18 секунд назад']],
-            [18, ['18 секунд назад', '19 секунд назад']],
-            [19, ['19 секунд назад', '20 секунд назад']],
-            [20, ['20 секунд назад', '21 секунда назад']],
-            [21, ['21 секунда назад', '22 секунди назад']],
-            [41, ['41 секунда назад', '42 секунди назад']],
-            [54, ['54 секунди назад', '55 секунд назад']],
-            [58, ['58 секунд назад', '59 секунд назад']],
+            [0, ['0 секунд тому', '1 секунда тому']],
+            [1, ['1 секунда тому', '2 секунди тому']],
+            [2, ['2 секунди тому', '3 секунди тому']],
+            [3, ['3 секунди тому', '4 секунди тому']],
+            [4, ['4 секунди тому', '5 секунд тому']],
+            [5, ['5 секунд тому', '6 секунд тому']],
+            [6, ['6 секунд тому', '7 секунд тому']],
+            [7, ['7 секунд тому', '8 секунд тому']],
+            [8, ['8 секунд тому', '9 секунд тому']],
+            [9, ['9 секунд тому', '10 секунд тому']],
+            [10, ['10 секунд тому', '11 секунд тому']],
+            [11, ['11 секунд тому', '12 секунд тому']],
+            [12, ['12 секунд тому', '13 секунд тому']],
+            [13, ['13 секунд тому', '14 секунд тому']],
+            [14, ['14 секунд тому', '15 секунд тому']],
+            [15, ['15 секунд тому', '16 секунд тому']],
+            [16, ['16 секунд тому', '17 секунд тому']],
+            [17, ['17 секунд тому', '18 секунд тому']],
+            [18, ['18 секунд тому', '19 секунд тому']],
+            [19, ['19 секунд тому', '20 секунд тому']],
+            [20, ['20 секунд тому', '21 секунда тому']],
+            [21, ['21 секунда тому', '22 секунди тому']],
+            [41, ['41 секунда тому', '42 секунди тому']],
+            [54, ['54 секунди тому', '55 секунд тому']],
+            [58, ['58 секунд тому', '59 секунд тому']],
         ];
     }
 }

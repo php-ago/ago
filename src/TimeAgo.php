@@ -4,196 +4,263 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-use Carbon\CarbonImmutable;
-use Carbon\Exceptions\InvalidFormatException;
 use DateTimeInterface;
-use Serhii\Ago\Exceptions\InvalidDateFormatException;
+use InvalidArgumentException;
+use RuntimeException;
 use Serhii\Ago\Exceptions\InvalidOptionsException;
 use Serhii\Ago\Exceptions\MissingRuleException;
+use Serhii\Ago\Loader\LangLoader;
+use Serhii\Ago\Loader\RuleLoader;
 
 final class TimeAgo
 {
-    /**
-     * @var int[]
-     */
-    private $options = [];
+    private static ?self $instance = null;
 
     /**
-     * @var self|null
+     * @var Option[]
      */
-    private static $instance;
+    private array $options;
+    private Config $config;
+    private LangLoader $langLoader;
+    private RuleLoader $ruleLoader;
+    private TimeDecomposer $timeDecomposer;
 
     private function __construct()
     {
+        $this->config = new Config();
+        $this->langLoader = new LangLoader(__DIR__ . '/../resources/lang');
+        $this->ruleLoader = new RuleLoader(__DIR__ . '/../resources');
+        $this->timeDecomposer = new TimeDecomposer();
     }
 
     public static function singleton(): self
     {
-        Lang::includeTranslations();
-        Lang::includeRules();
-
-        return self::$instance ?? (self::$instance = new self());
+        return self::$instance ??= new self();
     }
 
     /**
-     * Takes date string and returns converted date
+     * Takes date string and returns converted and translated date
      *
-     * @param int|string|DateTimeInterface|null $date
-     * @param int[]|int|null $options
-     *
-     * @return string
      * @throws MissingRuleException
-     * @throws InvalidDateFormatException
      * @throws InvalidOptionsException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
-    public static function trans($date, $options = []): string
+    public static function trans(int|string|DateTimeInterface $date, Option ...$options): string
     {
-        if (is_int($options)) {
-            $options = [$options];
+        return self::singleton()->transInternal($date, $options);
+    }
+
+    public static function configure(Config $config): void
+    {
+        $inst = self::singleton();
+
+        if ($config->hasCustomLang) {
+            $inst->config->lang = $config->lang;
         }
 
-        try {
-            $timestamp = (int) CarbonImmutable::parse($date)->timestamp;
-        } catch (InvalidFormatException $e) {
-            throw new InvalidDateFormatException($e->getMessage());
+        if ($config->hasCustomOverwrites) {
+            $inst->config->overwrites = array_merge($inst->config->overwrites, $config->overwrites);
         }
+    }
 
-        return self::singleton()->handle($timestamp, $options);
+    public static function reconfigure(Config|null $config = null): void
+    {
+        self::singleton()->config = $config ?? new Config();
     }
 
     /**
-     * @param int $date_timestamp The timestamp
-     * @param int[]|null $options
+     * @param Option[] $options
      *
-     * @return string
      * @throws MissingRuleException
      * @throws InvalidOptionsException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
-    private function handle(int $date_timestamp, ?array $options = []): string
+    private function transInternal(int|string|DateTimeInterface $date, array $options): string
     {
-        $this->options = $options ?? [];
+        $dateTime = match (true) {
+            is_int($date) => $date,
+            is_string($date) => strtotime($date),
+            $date instanceof DateTimeInterface => $date->getTimestamp(),
+        };
 
+        if ($dateTime === false) {
+            throw new InvalidArgumentException('[Ago]: Invalid date format');
+        }
+
+        return $this->handle($dateTime, $options);
+    }
+
+    /**
+     * @param Option[] $options
+     *
+     * @throws MissingRuleException
+     * @throws InvalidOptionsException
+     * @throws RuntimeException
+     */
+    private function handle(int $dateTime, array $options): string
+    {
+        $this->handleOptions($options);
+
+        $timeInSec = $this->computeTimeDifference($dateTime);
+        $langSet = $this->langLoader->load($this->config->lang);
+
+        if (!empty($this->config->overwrites)) {
+            $langSet->applyOverwrites($this->config);
+        }
+
+        if ($timeInSec < 60 && $this->isEnabled(Option::ONLINE)) {
+            return $langSet->online;
+        }
+
+        if ($timeInSec < 60 && $this->isEnabled(Option::JUST_NOW)) {
+            return $langSet->justNow;
+        }
+
+        [$langForm, $timeNum] = $this->findLangForm($langSet, $timeInSec);
+
+        $timeUnit = $this->computeTimeUnit($langForm, $timeNum);
+        $suffix = $this->computeSuffix($langSet);
+
+        return $this->mergeFinalOutput($timeNum, $timeUnit, $suffix, $langSet);
+    }
+
+    /**
+     * @param Option[] $options
+     *
+     * @throws InvalidOptionsException
+     */
+    private function handleOptions(array $options): void
+    {
+        $this->options = $options;
         $this->validateOptions();
 
-        $seconds = time() - $date_timestamp;
+        if ($this->isEnabled(Option::RESET_CONF)) {
+            $this->config = new Config();
+        }
+    }
 
-        if ($seconds < 0) {
-            $seconds = $date_timestamp - time();
-            $this->options[] = Option::UPCOMING;
+    private function mergeFinalOutput(int $timeNum, string $timeUnit, string $suffix, LangSet $langSet): string
+    {
+        $finalOutput = str_replace(
+            ['{timeUnit}', '{num}', '{ago}'],
+            [$timeUnit, (string) $timeNum, $suffix],
+            $langSet->format,
+        );
+
+        return trim($finalOutput);
+    }
+
+    private function computeTimeDifference(int $dateTime): int
+    {
+        $diff = time() - $dateTime;
+
+        if ($diff < 0) {
+            $this->enableUpcomingOption();
+            return -$diff;
         }
 
-        $minutes = (int) round($seconds / 60);
-        $hours = (int) round($seconds / 3600);
-        $days = (int) round($seconds / 86400);
-        $weeks = (int) round($seconds / 604800);
-        $months = (int) round($seconds / 2629440);
-        $years = (int) round($seconds / 31553280);
+        return $diff;
+    }
+
+    private function computeSuffix(LangSet $langSet): string
+    {
+        if ($this->isEnabled(Option::NO_SUFFIX) || $this->isEnabled(Option::UPCOMING)) {
+            return '';
+        }
+
+        return $langSet->ago;
+    }
+
+    /**
+     * @return array{LangForm,int}
+     *
+     * @throws RuntimeException
+     */
+    private function findLangForm(LangSet $langSet, int $timeInSec): array
+    {
+        $timeNum = $this->timeDecomposer->calculateTimeNum($timeInSec);
 
         switch (true) {
-            case $this->optionIsSet(Option::ONLINE) && $seconds < 60:
-                return Lang::trans('online');
-            case $this->optionIsSet(Option::JUST_NOW) && $seconds < 60:
-                return Lang::trans('just_now');
-            case $seconds < 60:
-                return $this->getWords('seconds', $seconds);
-            case $minutes < 60:
-                return $this->getWords('minutes', $minutes);
-            case $hours < 24:
-                return $this->getWords('hours', $hours);
-            case $days < 7:
-                return $this->getWords('days', $days);
-            case $weeks < 4:
-                return $this->getWords('weeks', $weeks);
-            case $months < 12:
-                return $this->getWords('months', $months);
+            case $timeInSec < 60:
+                return [$langSet->second, $timeNum->seconds];
+            case $timeNum->minutes < 60:
+                return [$langSet->minute, $timeNum->minutes];
+            case $timeNum->hours < 24:
+                return [$langSet->hour, $timeNum->hours];
+            case $timeNum->days < 7:
+                return [$langSet->day, $timeNum->days];
+            case $timeNum->weeks < 4:
+                return [$langSet->week, $timeNum->weeks];
+            case $timeNum->months < 12:
+                if ($timeNum->months === 0) {
+                    return [$langSet->month, 1];
+                }
+
+                return [$langSet->month, $timeNum->months];
         }
 
-        return $this->getWords('years', $years);
-    }
-
-    private function optionIsSet(int $option): bool
-    {
-        return in_array($option, $this->options, true);
+        return [$langSet->year, $timeNum->years];
     }
 
     /**
-     * @param string $type
-     * @param int $number
-     *
-     * @return string
      * @throws MissingRuleException
      */
-    private function getWords(string $type, int $number): string
+    private function computeTimeUnit(LangForm $langForm, int $timeNum): string
     {
-        $form = $this->getLanguageForm($number);
+        $form = $this->timeUnitForm($timeNum);
+        $matchedForm = $langForm->{$form};
 
-        $time = Lang::getTimeTranslations();
-
-        $translation = $time[$type][$form];
-        $ago = Lang::trans('ago');
-
-        if ($this->optionIsSet(Option::NO_SUFFIX) || $this->optionIsSet(Option::UPCOMING)) {
-            return "{$number} {$translation}";
-        }
-
-        if (Lang::$lang === 'de') {
-            return "{$ago} {$number} {$translation}";
-        }
-
-        return "{$number} {$translation} {$ago}";
+        return is_string($matchedForm) ? $matchedForm : $langForm->other;
     }
 
     /**
-     * @param int $number
-     *
-     * @return string
      * @throws MissingRuleException
      */
-    private function getLanguageForm(int $number): string
+    private function timeUnitForm(int $timeNum): string
     {
-        $last_digit = (int) substr((string) $number, -1);
+        $rule = $this->identifyGrammarRules($timeNum);
 
-        /**
-         * @var string $form_name
-         * @var bool|bool[] $rules
-         */
-        foreach (Lang::getRules($number, $last_digit) as $form_name => $rules) {
-            if ($this->ruleIsTrue($rules)) {
-                return $form_name;
+        return match (true) {
+            $rule->zero => 'zero',
+            $rule->one => 'one',
+            $rule->few => 'few',
+            $rule->two => 'two',
+            $rule->many => 'many',
+            default => 'other',
+        };
+    }
+
+    /**
+     * @throws MissingRuleException
+     */
+    private function identifyGrammarRules(int $timeNum): Rule
+    {
+        $rules = $this->ruleLoader->load($timeNum);
+        $lang = $this->config->lang;
+
+        foreach ($rules as $languages => $rule) {
+            if (str_contains($languages, $lang)) {
+                return $rule;
             }
         }
 
-        throw new MissingRuleException("Provided rules don't apply to a number {$number}");
+        throw new MissingRuleException($lang);
     }
 
-    /**
-     * @param bool[]|bool $rules
-     *
-     * @return bool
-     */
-    private function ruleIsTrue($rules): bool
+    private function isEnabled(Option $option): bool
     {
-        return $this->ruleIsBooleanTrue($rules) || $this->ruleIsArrayWithTrueItem($rules);
+        return in_array($option, haystack: $this->options, strict: true);
     }
 
-    /**
-     * @param bool[]|bool $rules
-     *
-     * @return bool
-     */
-    private function ruleIsBooleanTrue($rules): bool
+    private function enableUpcomingOption(): void
     {
-        return is_bool($rules) && $rules;
-    }
+        if ($this->isEnabled(Option::UPCOMING)) {
+            return;
+        }
 
-    /**
-     * @param bool[]|bool $rules
-     *
-     * @return bool
-     */
-    private function ruleIsArrayWithTrueItem($rules): bool
-    {
-        return is_array($rules) && in_array(true, $rules, true);
+        $this->options[] = Option::UPCOMING;
     }
 
     /**
@@ -201,13 +268,8 @@ final class TimeAgo
      */
     private function validateOptions(): void
     {
-        if ($this->optionIsSet(Option::UPCOMING)) {
-            $msg = 'Option::UPCOMING is deprecated. Read more: https://github.com/php-ago/ago/issues/34';
-            trigger_error($msg, E_USER_DEPRECATED);
-        }
-
-        if ($this->optionIsSet(Option::JUST_NOW) && $this->optionIsSet(Option::ONLINE)) {
-            $msg = 'Option JUST_NOW and ONLINE are incompatible. Use only one of them';
+        if ($this->isEnabled(Option::JUST_NOW) && $this->isEnabled(Option::ONLINE)) {
+            $msg = '[Ago]: Option JUST_NOW and ONLINE are incompatible. Use only one of them';
             throw new InvalidOptionsException($msg);
         }
     }

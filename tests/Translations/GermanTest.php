@@ -4,82 +4,61 @@ declare(strict_types=1);
 
 namespace Serhii\Tests\Translations;
 
-use Carbon\CarbonImmutable;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Serhii\Ago\Lang;
 use Serhii\Ago\TimeAgo;
-use Exception;
+use Serhii\Tests\TestCase;
 
-class GermanTest extends TestCase
+final class GermanTest extends TestCase
 {
-    private $language = 'de'; // Change language to 'de' for German
-
-    /**
-     * @dataProvider providerForReturnsCorrectTimeFromOneMinuteAndAbove
-     *
-     * @param string $method
-     * @param int $time
-     * @param string $output_expected
-     *
-     * @throws Exception
-     */
-    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $method, int $time, string $output_expected): void
+    #[DataProvider('providerForReturnsCorrectTimeFromOneMinuteAndAbove')]
+    public function testReturnsCorrectTimeFromOneMinuteAndAbove(string $input, string $expect): void
     {
-        Lang::set($this->language);
-        $date = CarbonImmutable::now()->{$method}($time)->toDateTimeString();
-        $this->assertSame($output_expected, TimeAgo::trans($date));
+        Lang::set(Lang::DE);
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
-    public function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
+    public static function providerForReturnsCorrectTimeFromOneMinuteAndAbove(): array
     {
         return [
-            ['subSeconds', 60, 'Vor 1 Minute'],
-            ['subMinutes', 1, 'Vor 1 Minute'],
-            ['subMinutes', 2, 'Vor 2 Minuten'],
-            ['subMinutes', 3, 'Vor 3 Minuten'],
-            ['subMinutes', 4, 'Vor 4 Minuten'],
-            ['subMinutes', 5, 'Vor 5 Minuten'],
-            ['subMinutes', 11, 'Vor 11 Minuten'],
-            ['subMinutes', 59, 'Vor 59 Minuten'],
-            ['subMinutes', 60, 'Vor 1 Stunde'],
-            ['subHours', 1, 'Vor 1 Stunde'],
-            ['subHours', 4, 'Vor 4 Stunden'],
-            ['subHours', 13, 'Vor 13 Stunden'],
-            ['subHours', 24, 'Vor 1 Tag'],
-            ['subDays', 2, 'Vor 2 Tagen'],
-            ['subDays', 7, 'Vor 1 Woche'],
-            ['subWeeks', 2, 'Vor 2 Wochen'],
-            ['subMonths', 1, 'Vor 1 Monat'],
-            ['subMonths', 2, 'Vor 2 Monaten'],
-            ['subMonths', 11, 'Vor 11 Monaten'],
-            ['subMonths', 12, 'Vor 1 Jahr'],
-            ['subYears', 5, 'Vor 5 Jahren'],
-            ['subYears', 21, 'Vor 21 Jahren'],
-            ['subYears', 31, 'Vor 31 Jahren'],
-            ['subYears', 41, 'Vor 41 Jahren'],
-            ['subYears', 100, 'Vor 100 Jahren'],
-            ['subYears', 101, 'Vor 101 Jahren'],
+            ['-60 seconds', 'Vor 1 Minute'],
+            ['-1 minute', 'Vor 1 Minute'],
+            ['-2 minutes', 'Vor 2 Minuten'],
+            ['-3 minutes', 'Vor 3 Minuten'],
+            ['-4 minutes', 'Vor 4 Minuten'],
+            ['-5 minutes', 'Vor 5 Minuten'],
+            ['-11 minutes', 'Vor 11 Minuten'],
+            ['-59 minutes', 'Vor 59 Minuten'],
+            ['-60 minutes', 'Vor 1 Stunde'],
+            ['-1 hour', 'Vor 1 Stunde'],
+            ['-4 hours', 'Vor 4 Stunden'],
+            ['-13 hours', 'Vor 13 Stunden'],
+            ['-24 hours', 'Vor 1 Tag'],
+            ['-2 days', 'Vor 2 Tagen'],
+            ['-7 days', 'Vor 1 Woche'],
+            ['-2 weeks', 'Vor 2 Wochen'],
+            ['-1 month', 'Vor 1 Monat'],
+            ['-2 months', 'Vor 2 Monaten'],
+            ['-11 months', 'Vor 11 Monaten'],
+            ['-12 months', 'Vor 1 Jahr'],
+            ['-5 years', 'Vor 5 Jahren'],
+            ['-21 years', 'Vor 21 Jahren'],
+            ['-31 years', 'Vor 31 Jahren'],
+            ['-41 years', 'Vor 41 Jahren'],
+            ['-100 years', 'Vor 100 Jahren'],
+            ['-101 years', 'Vor 101 Jahren'],
         ];
     }
 
-    /**
-     * @dataProvider providerForReturnsCorrectDateFrom0SecondsTo59Seconds
-     *
-     * @param int $seconds
-     * @param array $expect
-     *
-     * @throws Exception
-     */
+    #[DataProvider('providerForReturnsCorrectDateFrom0SecondsTo59Seconds')]
     public function testReturnsCorrectDateFrom0SecondsTo59Seconds(int $seconds, array $expect): void
     {
-        Lang::set($this->language);
-
-        $date = CarbonImmutable::now()->subSeconds($seconds)->toDateTimeString();
-        $message = sprintf("Expected '%s' or '%s' but got '%s'", $expect[0], $expect[1], $res = TimeAgo::trans($date));
-        $this->assertContains($res, $expect, $message);
+        Lang::set(Lang::DE);
+        $result = TimeAgo::trans("-{$seconds} seconds");
+        $this->assertContains($result, $expect);
     }
 
-    public function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
+    public static function providerForReturnsCorrectDateFrom0SecondsTo59Seconds(): array
     {
         return [
             [0, ['Vor 0 Sekunden', 'Vor 1 Sekunde']],

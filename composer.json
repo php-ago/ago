@@ -1,12 +1,8 @@
 {
     "name": "serhii/ago",
-    "description": "Converts given date into a nice readable format. Supports russian and english. Example will be '1 hour ago', '2 days ago', '1 second ago', 'Online' and so.",
+    "description": "Transforms a given date into a human-readable \"time ago\" format with multilingual support. Example outputs include \"1 hour ago\", \"2 days ago\", \"Just now\", and \"Online\". The results are fully customizable to fit your specific needs",
     "homepage": "https://php-ago.github.io/",
-    "keywords": [
-        "time ago",
-        "library",
-        "html"
-    ],
+    "keywords": ["time ago", "library", "html", "date", "datetime"],
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
@@ -15,7 +11,7 @@
         {
             "name": "Serhii Cho",
             "email": "serhiicho@protonmail.com",
-            "homepage": "https://serhii.io",
+            "homepage": "https://serhii.io/about-me",
             "role": "Developer"
         }
     ],
@@ -30,16 +26,14 @@
         }
     },
     "require": {
-        "php": "^7.1|^8.0",
-        "nesbot/carbon": "^3.2.4"
+        "php": "^8.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0",
-        "symfony/var-dumper": "^4.2",
-        "arokettu/private-access": "^3.0.0",
-        "phpstan/phpstan": "^1.10.57",
-        "squizlabs/php_codesniffer": "^3.7.2",
-        "laravel/pint": "dev-main"
+        "phpunit/phpunit": "^10.5.38",
+        "symfony/var-dumper": "^6.4.15",
+        "phpstan/phpstan": "^2.0.3",
+        "squizlabs/php_codesniffer": "^3.11.1",
+        "laravel/pint": "^1.18.3"
     },
     "scripts": {
         "stan": "phpstan analyse",
@@ -50,7 +44,8 @@
             "@cs",
             "@stan",
             "@test",
-            "@pint"
+            "@pint",
+            "echo \"\\033[32mEverything works! Thank you!\\033[0m\""
         ]
     },
     "support": {

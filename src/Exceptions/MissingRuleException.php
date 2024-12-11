@@ -8,4 +8,8 @@ use Exception;
 
 class MissingRuleException extends Exception
 {
+    public function __construct(string $lang)
+    {
+        parent::__construct("[Ago]: Missing rule for language: {$lang}");
+    }
 }

@@ -4,183 +4,165 @@ declare(strict_types=1);
 
 namespace Serhii\Tests;
 
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use Carbon\CarbonInterface;
-use DateTimeInterface;
-use PHPUnit\Framework\TestCase;
-use Serhii\Ago\Exceptions\InvalidDateFormatException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Serhii\Ago\Config;
 use Serhii\Ago\Lang;
+use Serhii\Ago\LangForm;
+use Serhii\Ago\LangOverwrite;
+use Serhii\Ago\Option;
 use Serhii\Ago\TimeAgo;
-use DateTime;
-use DateTimeImmutable;
-use Exception;
 
-use function Arokettu\Debug\call_private_method;
-
-class TimeAgoTest extends TestCase
+final class TimeAgoTest extends TestCase
 {
-    /**
-     * @dataProvider providerForGetLanguageFormReturnsCorrectForm
-     *
-     *
-     * @param int $number
-     * @param string $expect
-     * @param string $lang
-     */
-    public function testGetLanguageFormReturnsCorrectForm(int $number, string $expect, string $lang): void
+    public function tearDown(): void
+    {
+        TimeAgo::reconfigure();
+        parent::tearDown();
+    }
+
+    #[DataProvider('providerForReturnsCorrectTime')]
+    public function testReturnsCorrectTime(mixed $date, string $expect, array $options, string $lang): void
     {
         Lang::set($lang);
-        $result = call_private_method(TimeAgo::singleton(), 'getLanguageForm', $number);
-        $this->assertSame($expect, $result, "Number {$number} has to be {$expect}, {$result} given");
+        $this->assertSame($expect, TimeAgo::trans($date, ...$options));
     }
 
-    public function providerForGetLanguageFormReturnsCorrectForm(): array
+    public static function providerForReturnsCorrectTime(): array
     {
         return [
-            [0, 'special', 'ru'],
-            [1, 'single', 'ru'],
-            [2, 'plural', 'ru'],
-            [3, 'plural', 'ru'],
-            [4, 'plural', 'ru'],
-            [5, 'special', 'ru'],
-            [20, 'special', 'ru'],
-            [21, 'single', 'ru'],
-            [0, 'plural', 'en'],
-            [1, 'single', 'en'],
-            [2, 'plural', 'en'],
-            [3, 'plural', 'en'],
+            ['-40 seconds', 'Online', [Option::ONLINE], Lang::EN],
+            ['-40 seconds', 'Online', [Option::ONLINE], Lang::EN],
+            ['-33 seconds', 'Just now', [Option::JUST_NOW], Lang::EN],
+            ['-40 seconds', 'В сети', [Option::ONLINE], Lang::RU],
+            ['-33 seconds', 'Только что', [Option::JUST_NOW], Lang::RU],
+            ['-1 minutes', '1 minute ago', [], Lang::EN],
+            ['-2 minutes', '2 minutes ago', [], Lang::EN],
+            ['-3 minutes', '3 minutes', [Option::NO_SUFFIX], Lang::EN],
+            ['-1 minutes', '1 минута', [Option::NO_SUFFIX], Lang::RU],
+            ['-4 minutes', '4 minutes ago', [], Lang::EN],
+            ['-5 minutes', '5 minutes ago', [], Lang::EN],
+            ['11 minutes', '11 minutes', [], Lang::EN],
+            ['-59 minutes', '59 minutes ago', [], Lang::EN],
+            ['-3 minutes', 'Vor 3 Minuten', [], Lang::DE],
+            ['-1 hours', '1 hour ago', [], Lang::EN],
+            ['-4 hours', '4 hours ago', [], Lang::EN],
+            ['-13 hours', '13 hours ago', [], Lang::EN],
+            ['-24 hours', '1 day ago', [], Lang::EN],
+            ['-2 days', '2 days ago', [], Lang::EN],
+            ['-7 days', '1 week ago', [], Lang::EN],
+            ['-2 weeks', '2 недели назад', [], Lang::RU],
+            ['-1 months', '1 month', [Option::NO_SUFFIX], Lang::EN],
+            ['-2 months', '2 months ago', [], Lang::EN],
+            ['-11 months', '11 months ago', [], Lang::EN],
+            ['-12 months', '1 year ago', [], Lang::EN],
+            ['-5 years', '5 years ago', [], Lang::EN],
+            ['-21 years', '21 years ago', [], Lang::EN],
+            ['-31 years', '31 years ago', [], Lang::EN],
+            ['-41 years', '41 years ago', [], Lang::EN],
+            ['-100 years', '100 years ago', [], Lang::EN],
+            ['-101 years', '101 years ago', [], Lang::EN],
+            ['-121 year', '121 jaar geleden', [], Lang::NL],
         ];
     }
 
-
-    public function testGetLanguageFormThrowsExceptionIfFormHasNotBeenFound(): void
+    #[DataProvider('providerForDateEdges')]
+    public function testDateEdges(string $input, string $expect): void
     {
-        $this->expectExceptionMessage("Provided rules don't apply to a number -1");
-        call_private_method(TimeAgo::singleton(), 'getLanguageForm', -1);
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
-    /**
-     * @dataProvider providerForTransMethodReturnsCorrectResultAfterPassingATimestamp
-     *
-     */
-    public function testTransMethodReturnsCorrectResultAfterPassingATimestamp(int $timestamp, string $expect): void
-    {
-        $this->assertSame($expect, TimeAgo::trans($timestamp));
-    }
-
-    public function providerForTransMethodReturnsCorrectResultAfterPassingATimestamp(): array
+    public static function providerForDateEdges(): array
     {
         return [
-            [time() - 86400, '1 day ago'],
-            [CarbonImmutable::now()->subDay()->timestamp, '1 day ago'],
-            [CarbonImmutable::now()->subWeek()->timestamp, '1 week ago'],
-            [CarbonImmutable::now()->subMonths(5)->timestamp, '5 months ago'],
-            [CarbonImmutable::now()->subYears(30)->timestamp, '30 years ago'],
-            [CarbonImmutable::now()->subMinutes(3)->timestamp, '3 minutes ago'],
+            ['-31 days', '1 month ago'],
+            ['yesterday', '1 day ago'],
+            ['1 year', '1 year'],
         ];
     }
 
-    /**
-     * @dataProvider providerForTransMethodReturnsCorrectResultAfterPassingADateTimeObject
-     *
-     */
-    public function testTransMethodReturnsCorrectResultAfterPassingADateTimeObject(
-        DateTimeInterface $timestamp,
-        string $expect
-    ): void {
-        $this->assertSame($expect, TimeAgo::trans($timestamp));
+    #[DataProvider('providerForOverrides')]
+    public function testOverwrites(string $input, string $expect, string $lang, array $overwrites): void
+    {
+        TimeAgo::reconfigure(new Config(lang: $lang, overwrites: $overwrites));
+        $this->assertSame($expect, TimeAgo::trans($input));
     }
 
-    public function providerForTransMethodReturnsCorrectResultAfterPassingADateTimeObject(): array
+    public static function providerForOverrides(): array
     {
         return [
-            [(new DateTimeImmutable('now - 3 days')), '3 days ago'],
-            [(new DateTimeImmutable('now - 2 weeks')), '2 weeks ago'],
-            [(new DateTime('now - 4 months')), '4 months ago'],
-            [(new DateTime('now - 20 years')), '20 years ago'],
-            [(new DateTimeImmutable('now - 5 minutes')), '5 minutes ago'],
+            [
+                '-2 days',
+                '2d',
+                Lang::EN,
+                [
+                    new LangOverwrite(
+                        lang: Lang::EN,
+                        format: '{num}{timeUnit}',
+                        day: new LangForm(other: 'd', one: 'd'),
+                    ),
+                ],
+            ],
+            [
+                '-4 months',
+                '4 мес. назад',
+                Lang::RU,
+                [
+                    new LangOverwrite(
+                        lang: Lang::RU,
+                        month: new LangForm(other: 'мес.', one: 'мес.', few: 'мес.'),
+                    ),
+                ],
+            ],
+            [
+                '-2 days',
+                '2 - д',
+                Lang::RU,
+                [
+                    new LangOverwrite(lang: Lang::RU, format: '{num} - {timeUnit}'),
+                    new LangOverwrite(lang: Lang::RU, day: new LangForm(other: 'д', one: 'д')),
+                ],
+            ],
+            [
+                '-4 days',
+                '4 days ago',
+                Lang::EN,
+                [
+                    new LangOverwrite(lang: Lang::RU, format: '{num} - {timeUnit}'),
+                    new LangOverwrite(lang: Lang::RU, day: new LangForm(other: 'д', one: 'д')),
+                ],
+            ],
         ];
     }
 
-    /**
-     * @dataProvider providerForTransMethodReturnsCorrectResultAfterPassingACarbonObject
-     *
-     */
-    public function testTransMethodReturnsCorrectResultAfterPassingACarbonObject(
-        CarbonInterface $timestamp,
-        string $expect
-    ): void {
-        $this->assertSame($expect, TimeAgo::trans($timestamp));
-    }
-
-    public function providerForTransMethodReturnsCorrectResultAfterPassingACarbonObject(): array
+    public function testConfigureMethodChangesOnlySpecificFields(): void
     {
-        return [
-            [CarbonImmutable::now()->subDays(4), '4 days ago'],
-            [CarbonImmutable::now()->subMonths(3), '3 months ago'],
-            [Carbon::now()->subMonths(5), '5 months ago'],
-            [CarbonImmutable::now()->subYears(21), '21 years ago'],
-            [Carbon::now()->subMinutes(6), '6 minutes ago'],
-            [Carbon::now()->subMonths(8), '8 months ago'],
-        ];
+        TimeAgo::reconfigure(new Config(
+            lang: Lang::RU,
+            overwrites: [
+                new LangOverwrite(
+                    lang: Lang::RU,
+                    format: '{num}{timeUnit}',
+                    minute: new LangForm(other: 'м', one: 'м'),
+                ),
+            ],
+        ));
+
+        $this->assertSame('1м', TimeAgo::trans('-1 minute'));
+
+        TimeAgo::configure(new Config(lang: Lang::EN));
+
+        $this->assertSame('1 minute ago', TimeAgo::trans('-1 minute'));
     }
 
-    /**
-     * @dataProvider providerForTransMethodThrowsExceptionIfInputHasIncorrectString
-     *
-     */
-    public function testTransMethodThrowsExceptionIfInputHasIncorrectString(string $input): void
+    public function testLanguageSwitchWithLangClass(): void
     {
-        $this->expectException(InvalidDateFormatException::class);
-        TimeAgo::trans($input);
-    }
+        Lang::set(Lang::RU);
+        $this->assertSame('2 минуты', TimeAgo::trans('2 minutes'));
 
-    public function providerForTransMethodThrowsExceptionIfInputHasIncorrectString(): array
-    {
-        return [
-            ['sfdafsd'],
-            ['safjldkfj'],
-            ['afjdsalkfjdsklfj'],
-            ['__'],
-        ];
-    }
+        Lang::set(Lang::UK);
+        $this->assertSame('3 хвилини', TimeAgo::trans('3 minutes'));
 
-    /**
-     * @dataProvider providerForTransMethodReturnsTimesLeftForADateInFuture
-     *
-     *
-     * @param string $date
-     * @param string $lang
-     * @param string $result
-     *
-     * @throws Exception
-     */
-    public function testTransMethodReturnsTimesLeftForADateInFuture(
-        string $date,
-        string $lang,
-        string $result
-    ): void {
-        Lang::set($lang);
-        $this->assertSame($result, TimeAgo::trans($date));
-    }
-
-    public function providerForTransMethodReturnsTimesLeftForADateInFuture(): array
-    {
-        return [
-            [CarbonImmutable::now()->addMinutes(2)->toDateTimeString(), 'en', '2 minutes'],
-            [CarbonImmutable::now()->addMinutes(10)->toDateTimeString(), 'en', '10 minutes'],
-            [CarbonImmutable::now()->addHours(13)->toDateTimeString(), 'en', '13 hours'],
-            [CarbonImmutable::now()->addMonth()->toDateTimeString(), 'en', '1 month'],
-            [CarbonImmutable::now()->addYears(10)->toDateTimeString(), 'en', '10 years'],
-            [CarbonImmutable::now()->addYear()->toDateTimeString(), 'en', '1 year'],
-            [CarbonImmutable::now()->addMinutes(2)->toDateTimeString(), 'ru', '2 минуты'],
-            [CarbonImmutable::now()->addMinutes(10)->toDateTimeString(), 'ru', '10 минут'],
-            [CarbonImmutable::now()->addHours(13)->toDateTimeString(), 'ru', '13 часов'],
-            [CarbonImmutable::now()->addMonth()->toDateTimeString(), 'ru', '1 месяц'],
-            [CarbonImmutable::now()->addMonths(10)->toDateTimeString(), 'ru', '10 месяцев'],
-            [CarbonImmutable::now()->addYears(10)->toDateTimeString(), 'ru', '10 лет'],
-            [CarbonImmutable::now()->addYear()->toDateTimeString(), 'ru', '1 год'],
-        ];
+        Lang::set(Lang::EN);
+        $this->assertSame('5 minutes ago', TimeAgo::trans('-5 minutes'));
     }
 }

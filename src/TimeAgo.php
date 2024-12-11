@@ -23,14 +23,14 @@ final class TimeAgo
     private Config $config;
     private LangLoader $langLoader;
     private RuleLoader $ruleLoader;
-    private TimeDecomposer $timeUtil;
+    private TimeDecomposer $timeDecomposer;
 
     private function __construct()
     {
         $this->config = new Config();
         $this->langLoader = new LangLoader(__DIR__ . '/../resources/lang');
         $this->ruleLoader = new RuleLoader(__DIR__ . '/../resources');
-        $this->timeUtil = new TimeDecomposer();
+        $this->timeDecomposer = new TimeDecomposer();
     }
 
     public static function singleton(): self
@@ -180,7 +180,7 @@ final class TimeAgo
      */
     private function findLangForm(LangSet $langSet, int $timeInSec): array
     {
-        $timeNum = $this->timeUtil->calculateTimeNum($timeInSec);
+        $timeNum = $this->timeDecomposer->calculateTimeNum($timeInSec);
 
         switch (true) {
             case $timeInSec < 60:

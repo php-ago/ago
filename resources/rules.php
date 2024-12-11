@@ -2,26 +2,23 @@
 
 declare(strict_types=1);
 
-use Serhii\Ago\Lang;
 use Serhii\Ago\Rule;
 
 /**
- * @return Rule[]
+ * @return array<string,Rule>
  */
 return static function (int $num): array {
     $end = $num % 10;
 
     return [
-        new Rule(
-            langs: [Lang::EN, Lang::NL, Lang::DE],
+        "en,nl,de" => new Rule(
             zero: $num === 0,
             one: $num === 1,
             two: $num === 2,
             few: $num > 1,
             many: $num > 1,
         ),
-        new Rule(
-            langs: [Lang::RU, Lang::UK],
+        "ru,uk" => new Rule(
             zero: $num === 0,
             one: $num === 1 || ($num > 20 && $end === 1),
             two: $num === 2,

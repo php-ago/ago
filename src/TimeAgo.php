@@ -230,13 +230,13 @@ final class TimeAgo
         $rules = $this->ruleLoader->load($timeNum);
         $lang = $this->config->lang;
 
-        foreach ($rules as $rule) {
-            if (in_array($lang, $rule->langs)) {
+        foreach ($rules as $languages => $rule) {
+            if (str_contains($lang, $languages)) {
                 return $rule;
             }
         }
 
-        throw new MissingRuleException($lang->value);
+        throw new MissingRuleException($lang);
     }
 
     private function calculateTimeNum(int $timeInSec): TimeNumber

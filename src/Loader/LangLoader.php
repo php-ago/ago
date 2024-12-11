@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Serhii\Ago\Loader;
 
 use RuntimeException;
-use Serhii\Ago\Lang;
 use Serhii\Ago\LangSet;
 
 final readonly class LangLoader
@@ -18,12 +17,12 @@ final readonly class LangLoader
      * Loads translations for the given language from the
      * language directory.
      */
-    public function load(Lang $lang): LangSet
+    public function load(string $lang): LangSet
     {
-        $path = "{$this->langDir}/{$lang->value}.php";
+        $path = "{$this->langDir}/{$lang}.php";
 
         if (!file_exists($path)) {
-            throw new RuntimeException("[Ago]: Translation file not found for language: {$lang->value}");
+            throw new RuntimeException("[Ago]: Translation file not found for language: {$lang}");
         }
 
         return require $path;

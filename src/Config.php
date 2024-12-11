@@ -6,7 +6,7 @@ namespace Serhii\Ago;
 
 final class Config
 {
-    public Lang $lang;
+    public string $lang;
 
     /**
      * Overwrite default translations with provided translations.
@@ -19,13 +19,15 @@ final class Config
     public readonly bool $hasCustomOverwrites;
 
     /**
-     * @param Lang|null $lang Use Lang enum to choose language.
+     * @see https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+     *
+     * @param string|null $lang Use ISO 639-1 language code.
      * Default is English (Lang::EN).
      *
      * @param LangOverwrite[]|null $overwrites Overwrite default
      * translations.
      */
-    public function __construct(Lang|null $lang = null, array|null $overwrites = null)
+    public function __construct(string|null $lang = null, array|null $overwrites = null)
     {
         $this->lang = $lang ?? Lang::EN;
         $this->hasCustomLang = $lang !== null;

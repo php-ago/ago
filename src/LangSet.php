@@ -37,11 +37,6 @@ final class LangSet
     {
         foreach (get_object_vars($overwrites) as $prop => $value) {
             if ($value && property_exists($this, $prop)) {
-                if ($value instanceof Lang) {
-                    $this->lang = $value->value;
-                    continue;
-                }
-
                 $this->$prop = $value;
             }
         }

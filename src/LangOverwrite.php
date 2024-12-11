@@ -7,7 +7,7 @@ namespace Serhii\Ago;
 final readonly class LangOverwrite
 {
     public function __construct(
-        public Lang $lang,
+        public string $lang,
         public string|null $format = null,
         public string|null $ago = null,
         public string|null $online = null,

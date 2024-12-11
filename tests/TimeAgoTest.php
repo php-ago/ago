@@ -16,7 +16,7 @@ use Serhii\Ago\TimeAgo;
 final class TimeAgoTest extends TestCase
 {
     #[DataProvider('providerForReturnsCorrectTime')]
-    public function testReturnsCorrectTime(mixed $date, string $expect, array $options, Lang $lang): void
+    public function testReturnsCorrectTime(mixed $date, string $expect, array $options, string $lang): void
     {
         TimeAgo::reconfigure(new Config(lang: $lang));
         $this->assertSame($expect, TimeAgo::trans($date, ...$options));
@@ -82,7 +82,7 @@ final class TimeAgoTest extends TestCase
     }
 
     #[DataProvider('providerForOverrides')]
-    public function testOverwrites(string $input, string $expect, Lang $lang, array $overwrites): void
+    public function testOverwrites(string $input, string $expect, string $lang, array $overwrites): void
     {
         TimeAgo::reconfigure(new Config(lang: $lang, overwrites: $overwrites));
         $this->assertSame($expect, TimeAgo::trans($input));

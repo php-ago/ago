@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
+use Serhii\Ago\Lang;
 use Serhii\Ago\LangForm;
 use Serhii\Ago\LangSet;
 
 return new LangSet(
-    lang: "nl",
+    lang: Lang::NL,
     format: "{num} {timeUnit} {ago}",
     ago: "geleden",
     online: "Online",

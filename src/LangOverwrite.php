@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-final readonly class LangOverwrite
+final class LangOverwrite
 {
     /**
      * @param string $lang Language code ISO 639-1
@@ -15,18 +15,18 @@ final readonly class LangOverwrite
      * with Option::JUST_NOW enabled
      */
     public function __construct(
-        public string $lang,
-        public string|null $format = null,
-        public string|null $ago = null,
-        public string|null $online = null,
-        public string|null $justNow = null,
-        public LangForm|null $second = null,
-        public LangForm|null $minute = null,
-        public LangForm|null $hour = null,
-        public LangForm|null $day = null,
-        public LangForm|null $week = null,
-        public LangForm|null $month = null,
-        public LangForm|null $year = null,
+        public readonly string $lang,
+        public readonly string|null $format = null,
+        public readonly string|null $ago = null,
+        public readonly string|null $online = null,
+        public readonly string|null $justNow = null,
+        public readonly LangForm|null $second = null,
+        public readonly LangForm|null $minute = null,
+        public readonly LangForm|null $hour = null,
+        public readonly LangForm|null $day = null,
+        public readonly LangForm|null $week = null,
+        public readonly LangForm|null $month = null,
+        public readonly LangForm|null $year = null,
     ) {
     }
 }

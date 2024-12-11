@@ -1,9 +1,9 @@
 # Release Notes
 
-## v4.0.0 (2024-12-06)
+## v4.0.0 (2024-12-11)
 > 🚀 [Upgrade Guide from v3 to v4](https://ago-php.github.io/v4/upgrade.html)
 - Breaking changes
-    - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1`
+    - ⚠️ Drop support for PHP `7.1`, `7.2`, `7.3`, `7.4`, `8.0`
     - ⚠️ The `Option` class is now an enum instead of a class
     - ⚠️ Remove second parameter from `Serhii\TimeAgo\Lang::set()` method, which was `$overwrites`. Now, overwrites are defined through the configuration
 - Improvements

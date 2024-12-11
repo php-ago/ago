@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Serhii\Ago;
 
-final readonly class Rule
+final class Rule
 {
     /**
      * This property is a default one for all the rules.
@@ -13,11 +13,11 @@ final readonly class Rule
     public bool $other;
 
     public function __construct(
-        public bool $zero,
-        public bool $one,
-        public bool $two,
-        public bool $few,
-        public bool $many,
+        public readonly bool $zero,
+        public readonly bool $one,
+        public readonly bool $two,
+        public readonly bool $few,
+        public readonly bool $many,
     ) {
         $this->other = true;
     }

@@ -60,9 +60,9 @@ final class TimeAgo
         }
     }
 
-    public static function reconfigure(Config $config): void
+    public static function reconfigure(Config|null $config = null): void
     {
-        self::singleton()->config = $config;
+        self::singleton()->config = $config ?? new Config();
     }
 
     /**

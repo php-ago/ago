@@ -51,11 +51,11 @@ final class TimeAgo
     {
         $inst = self::singleton();
 
-        if ($config->lang !== Lang::EN) {
+        if ($config->hasCustomLang) {
             $inst->config->lang = $config->lang;
         }
 
-        if ($config->overwrites !== []) {
+        if ($config->hasCustomOverwrites) {
             $inst->config->overwrites = array_merge($inst->config->overwrites, $config->overwrites);
         }
     }

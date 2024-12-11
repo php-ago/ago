@@ -11,14 +11,14 @@ return static function (int $num): array {
     $end = $num % 10;
 
     return [
-        "en,nl,de" => new Rule(
+        'en,nl,de' => new Rule(
             zero: $num === 0,
             one: $num === 1,
             two: $num === 2,
             few: $num > 1,
             many: $num > 1,
         ),
-        "ru,uk" => new Rule(
+        'ru,uk' => new Rule(
             zero: $num === 0,
             one: $num === 1 || ($num > 20 && $end === 1),
             two: $num === 2,

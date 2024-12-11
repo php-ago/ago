@@ -40,12 +40,13 @@ final class LangSet
         $this->year = new LangForm(...$translations['year']);
     }
 
-    /**
-     * @param LangOverwrite[] $overwrites
-     */
-    public function applyOverwrites(array $overwrites): void
+    public function applyOverwrites(Config $config): void
     {
-        foreach ($overwrites as $langSet) {
+        foreach ($config->overwrites as $langSet) {
+            if ($langSet->lang !== $config->lang) {
+                continue;
+            }
+
             $this->applyLangSet($langSet);
         }
     }

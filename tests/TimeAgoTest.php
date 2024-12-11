@@ -100,4 +100,24 @@ final class TimeAgoTest extends TestCase
             ]],
         ];
     }
+
+    public function testConfigureMethodChangesOnlySpecificFields(): void
+    {
+        TimeAgo::reconfigure(new Config(
+            lang: Lang::RU,
+            overwrites: [
+                new LangOverwrite(
+                    lang: Lang::RU,
+                    format: '{num}{timeUnit}',
+                    minute: new LangForm(other: 'м', one: 'м'),
+                ),
+            ],
+        ));
+
+        $this->assertSame('1м', TimeAgo::trans('now - 1 minute'));
+
+        TimeAgo::configure(new Config(lang: Lang::EN));
+
+        $this->assertSame('1 minute ago', TimeAgo::trans('now - 1 minute'));
+    }
 }

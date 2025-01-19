@@ -22,7 +22,7 @@ This package is well tested, optimized and already used in many production apps.
 
 ## Quick Start
 ```bash
-composer require serhii/ago:^4.0
+composer require serhii/ago
 ```
 
 ## License

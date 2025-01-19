@@ -1,5 +1,8 @@
 # Release Notes
 
+## v4.0.1 (2025-01-18)
+- 🐛 Bug fix with incorrect days in a year
+
 ## v4.0.0 (2024-12-11)
 > 🚀 [Upgrade Guide from v3 to v4](https://php-ago.github.io/4.x/upgrade)
 - Breaking changes

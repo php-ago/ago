@@ -42,7 +42,7 @@ final class TimeDecomposer
 
     private function lastDayOfYear(): int
     {
-        return (int) date('z', strtotime('December 31'));
+        return 1 + ((int) date('z', strtotime('December 31')));
     }
 
     /**

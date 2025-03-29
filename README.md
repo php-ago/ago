@@ -1,6 +1,6 @@
 ![Ago package](https://serhii.io/storage/other/ago.png)
 
-[![Ago](https://github.com/php-ago/ago/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/php-ago/ago/actions/workflows/php.yml)
+[![Ago](https://github.com/php-ago/ago/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/php-ago/ago/actions/workflows/php.yml)
 [![Total Downloads](https://poser.pugx.org/serhii/ago/downloads)](https://packagist.org/packages/serhii/ago)
 [![License](https://poser.pugx.org/serhii/ago/license)](https://packagist.org/packages/serhii/ago)
 
@@ -26,4 +26,4 @@ composer require serhii/ago
 ```
 
 ## License
-The Ago project is licensed under the [MIT License](https://github.com/php-ago/ago/blob/main/LICENSE)
+The Ago project is licensed under the [MIT License](https://github.com/php-ago/ago/blob/master/LICENSE)

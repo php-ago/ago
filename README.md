@@ -27,3 +27,20 @@ composer require serhii/ago
 
 ## License
 The Ago project is licensed under the [MIT License](https://github.com/php-ago/ago/blob/master/LICENSE)
+
+## Development
+### Without Docker
+You'll need to have Composer and PHP installed on your machine
+
+### Docker
+#### Build an image
+To build an image, navigate to the root of project that contains `Dockerfile` and run this command:
+```bash
+docker compose build app
+```
+
+#### Run the container
+To run the container, navigate to the root of project that contains `Dockerfile` and run this command:
+```bash
+docker compose run --rm app
+```

@@ -1,13 +1,13 @@
 name: php-serhii-ago
 
 services:
-  app:
-    build:
-      context: .
-    image: php-serhii-ago
-    volumes:
-      - .:/app
-    environment:
-      - TERM=xterm-256color
-    tty: true
-    stdin_open: true
+    app:
+        build:
+            context: .
+        image: php-serhii-ago
+        volumes:
+            - .:/app
+        environment:
+            - TERM=xterm-256color
+        tty: true
+        stdin_open: true

@@ -1,7 +1,7 @@
 # Release Notes
 
 ## v4.1.0 (2025-06-18)
-💻 Added Docker to the project
+💻 Added Container Engines (like Podman and Docker) support to the project
 
 ## v4.0.1 (2025-01-18)
 - 🐛 Bug fix with incorrect days in a year

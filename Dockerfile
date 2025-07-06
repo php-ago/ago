@@ -18,7 +18,6 @@ COPY composer.json composer.lock* ./
 RUN composer install --no-interaction --prefer-dist --no-progress && \
     composer clear-cache
 
-# Copy the rest of the application
 COPY . .
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT ["bash"]

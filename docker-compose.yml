@@ -1,10 +1,11 @@
-name: php-serhii-ago
+name: php-ago
 
 services:
     app:
         build:
             context: .
-        image: php-serhii-ago
+        image: php-ago
+        container_name: php-ago
         volumes:
             - .:/app
         environment:

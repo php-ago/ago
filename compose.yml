@@ -4,6 +4,7 @@ services:
     app:
         build:
             context: .
+            dockerfile: Containerfile
         image: php-ago
         container_name: php-ago
         volumes:

@@ -39,13 +39,6 @@ To build an image, navigate to the root of project and run this command:
 podman-compose build app
 ```
 
-#### Create `node_modules`
-Run this command to install npm packages and generate a `node_modules` directory on your local machine:
-
-```bash
-podman-compose run --rm app npm i
-```
-
 #### Run the Container
 To run the container, navigate to the root of and run this command:
 ```bash

@@ -1,5 +1,8 @@
 # Release Notes
 
+## v4.2.0 (2025-11-26)
+- ✨ Added support for PHP 8.5
+
 ## v4.1.0 (2025-06-18)
 💻 Added Container Engines (like Podman and Docker) support to the project
 

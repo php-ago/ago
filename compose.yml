@@ -1,11 +1,11 @@
 name: php-ago
 
 services:
-    app:
-        build: .
-        image: php-ago
-        container_name: php-ago
-        volumes:
-            - .:/app:z
-        tty: true
-        stdin_open: true
+  app:
+    build: .
+    image: php-ago
+    container_name: php-ago
+    volumes:
+      - .:/var/www/html:z
+    tty: true
+    stdin_open: true

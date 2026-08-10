@@ -1,0 +1,31 @@
+name: Test PHP Ago
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php_version: [8.1, 8.2, 8.3, 8.4, 8.5]
+
+    steps:
+      - name: Install PHP
+        uses: https://codeberg.org/act/install-php@v1
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install composer dependencies
+        run: |
+          composer validate
+          composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run tests and checks
+        run: composer check

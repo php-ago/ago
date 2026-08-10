@@ -1,7 +1,7 @@
 ![Ago package](.forgejo/header.png)
 
 [![Total Downloads](https://poser.pugx.org/serhii/ago/downloads)](https://codeberg.org/php-ago/ago/src/branch/master/LICENSE)
-[![License](https://poser.pugx.org/serhii/ago/license)](https://packagist.org/packages/serhii/ago)
+[![License](https://poser.pugx.org/serhii/ago/license)](https://codeberg.org/php-ago/ago/src/branch/master/LICENSE)
 
 Date/time converter into "n time ago" format that supports multiple languages, such as 🇷🇺 🇬🇧 🇳🇱 🇺🇦 🇩🇪. You can contribute any language that you wish easily by creating a pull request. When new PHP version comes out, this package will be updated to support it as soon as possible.
 

@@ -9,6 +9,6 @@ RUN apt-get update && apt-get install -y \
 # Install Composer binary
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-ENTRYPOINT ["bash"]
+CMD ["bash"]

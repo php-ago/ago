@@ -1,4 +1,4 @@
-![Ago package](https://serhiicho.com/img/other/ago.png)
+![Ago package](.forgejo/header.png)
 
 [![Total Downloads](https://poser.pugx.org/serhii/ago/downloads)](https://codeberg.org/php-ago/ago/src/branch/master/LICENSE)
 [![License](https://poser.pugx.org/serhii/ago/license)](https://packagist.org/packages/serhii/ago)

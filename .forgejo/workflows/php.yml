@@ -1,4 +1,5 @@
 name: PHP quality checks
+enable-email-notifications: true
 
 on:
   pull_request:

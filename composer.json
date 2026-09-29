@@ -1,7 +1,7 @@
 {
     "name": "serhii/ago",
     "description": "Transforms a given date into a human-readable \"time ago\" format with multilingual support. Example outputs include \"1 hour ago\", \"2 days ago\", \"Just now\", and \"Online\". The results are fully customizable to fit your specific needs",
-    "homepage": "https://php-ago.codeberg.page/",
+    "homepage": "https://php-ago.serhiicho.com/",
     "keywords": ["time ago", "library", "html", "date", "datetime"],
     "type": "library",
     "license": "MIT",

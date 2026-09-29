@@ -7,7 +7,7 @@ Date/time converter into "n time ago" format that supports multiple languages, s
 
 This package is well tested, optimized and already used in many production apps. It has shown itself pretty well. If you find any issues or bugs 🐞, please create an [issue](https://codeberg.org/php-ago/ago/issues/new), and I'll fix it as soon as I can.
 
-### Follow the [official documentation](https://php-revival.codeberg.page/) for more information
+### Follow the [official documentation](https://php-revival.serhiicho.com/) for more information
 
 ## Supported Languages
 

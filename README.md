@@ -32,50 +32,30 @@ The Ago project is licensed under the [MIT License](https://codeberg.org/php-ago
 
 ## Contribute
 
+If you use Docker instead of Podman, just replace `podman` with `docker` in commands below:
+
 ### Build an Image
 
-To build an image, navigate to the root of project and run this command.
-
-With Podman:
+To build an image, navigate to the root of project and run this:.
 
 ```bash
 podman-compose build
-```
-
-With Docker:
-
-```bash
-docker compose build
 ```
 
 ### Run the Container
 
 To run the container, navigate to the root of and run this command:
 
-With Podman:
-
 ```bash
 podman-compose up -d
 ```
 
-With Docker:
-
-```bash
-docker compose up -d
-```
-
 ### Enter The Container
 
-With Podman:
+To enter the OCI container, run this:
 
 ```bash
 podman-compose exec app bash
-```
-
-With Docker:
-
-```bash
-docker compose exec app bash
 ```
 
 ### Install Composer Dev Dependencies
@@ -84,16 +64,8 @@ After you entered the container, run `composer install` to install all developme
 
 ### Cleanup
 
-After you are done working on a project, you can cleanup and run the command below to remove things like created networks for the current project.
-
-With Podman:
+After you are done working on a project, you can cleanup and run the command below to remove things like created networks for the current project:
 
 ```bash
 podman-compose down
-```
-
-With Docker:
-
-```bash
-docker compose down
 ```

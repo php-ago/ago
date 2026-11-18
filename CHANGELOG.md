@@ -1,5 +1,9 @@
 # Release Notes
 
+## v4.3.2 (2026-11-18)
+
+- 🧑‍💻 Moved repository from Codeberg to GitHub
+
 ## v4.3.1 (2026-09-29)
 
 - 💻 Changed documentation URL to https://php-ago.serhiicho.com

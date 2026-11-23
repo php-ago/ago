@@ -36,7 +36,7 @@ final class LangSet
     private function applyLangSet(LangOverwrite $overwrites): void
     {
         foreach (get_object_vars($overwrites) as $prop => $value) {
-            if ($value && property_exists($this, $prop)) {
+            if ($value !== null && property_exists($this, $prop)) {
                 $this->$prop = $value;
             }
         }

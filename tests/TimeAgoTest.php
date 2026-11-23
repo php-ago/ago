@@ -131,6 +131,22 @@ final class TimeAgoTest extends TestCase
                     new LangOverwrite(lang: Lang::RU, day: new LangForm(other: 'д', one: 'д')),
                 ],
             ],
+            [
+                '-2 days',
+                '2 days',
+                Lang::EN,
+                [
+                    new LangOverwrite(lang: Lang::EN, ago: ''),
+                ],
+            ],
+            [
+                '-2 days',
+                '2 days previously',
+                Lang::EN,
+                [
+                    new LangOverwrite(lang: Lang::EN, ago: 'previously'),
+                ],
+            ],
         ];
     }
 
@@ -164,5 +180,20 @@ final class TimeAgoTest extends TestCase
 
         Lang::set(Lang::EN);
         $this->assertSame('5 minutes ago', TimeAgo::trans('-5 minutes'));
+    }
+
+    public function testEmptyStringOverwriteDoesNotKeepDefaultAndNullLeavesIt(): void
+    {
+        TimeAgo::reconfigure(new Config(
+            lang: Lang::EN,
+            overwrites: [new LangOverwrite(lang: Lang::EN, ago: '')],
+        ));
+        $this->assertSame('2 days', TimeAgo::trans('-2 days'));
+
+        TimeAgo::reconfigure(new Config(
+            lang: Lang::EN,
+            overwrites: [new LangOverwrite(lang: Lang::EN, ago: null)],
+        ));
+        $this->assertSame('2 days ago', TimeAgo::trans('-2 days'));
     }
 }

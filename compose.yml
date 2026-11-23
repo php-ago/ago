@@ -9,3 +9,4 @@ services:
       - .:/var/www/html:z
     tty: true
     stdin_open: true
+    stop_grace_period: 1s

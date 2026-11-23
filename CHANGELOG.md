@@ -1,5 +1,9 @@
 # Release Notes
 
+## v4.3.3 (2026-11-23)
+
+- 🐛 Setting a translation overwrite to '' had no effect, so you couldn't blank out a word such as the suffix. Closes [#66](https://github.com/php-ago/ago/issues/66) by [@OpenDeernet](https://github.com/OpenDeernet).
+
 ## v4.3.2 (2026-11-18)
 
 - 🧑‍💻 Moved repository from Codeberg to GitHub
